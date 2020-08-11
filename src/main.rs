@@ -40,10 +40,12 @@ fn main() {
             match FictionBook::try_from(header.as_bytes()) {
                 Ok(fb) => {
                     let langs = fb.description.title_info.lang.iter().map(|lang| lang.text.clone()).collect::<Vec<String>>().join(",");
-                    println!("{:>5}, [{}] {}", 
+                    println!("{:>5}, [{}] {} - {}", 
                         i, 
                         langs,
-                        fb.description.title_info.book_title.text);
+                        fb.get_title(),
+                        fb.get_book_name().unwrap_or_default()
+                        );
                 },
                 Err(_) =>  {
                     error_counter += 1;
