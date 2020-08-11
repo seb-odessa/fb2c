@@ -4,9 +4,12 @@ extern crate zip;
 
 use clap::{Arg, App, AppSettings};
 use fb2parser::FictionBook;
+use iconv::IconvDecodable;
 use std::{fs, path};
 use std::io::Read;
 use std::convert::TryFrom;
+
+const CHUNK: usize = 128;
 
 
 fn main() {
@@ -35,7 +38,13 @@ fn main() {
         if let Some(header) = load_header(&mut zip_file)
         {
             match FictionBook::try_from(header.as_bytes()) {
-                Ok(_fb) => {},
+                Ok(fb) => {
+                    let langs = fb.description.title_info.lang.iter().map(|lang| lang.text.clone()).collect::<Vec<String>>().join(",");
+                    println!("{:>5}, [{}] {}", 
+                        i, 
+                        langs,
+                        fb.description.title_info.book_title.text);
+                },
                 Err(_) =>  {
                     error_counter += 1;
                 }
@@ -51,8 +60,50 @@ pub fn find(haystack: &[u8], needle: &[u8]) -> Option<usize> {
     haystack.windows(needle.len()).position(|window| window == needle)
 }
 
-fn load_header<F: Read>(file: &mut F) -> Option<String> {
-    const CHUNK: usize = 128;
+fn find_content_bounds(header: &[u8], beg: &str, end: &str) -> Option<(usize, usize)> {    
+    if let Some(pos) = find(header, beg.as_bytes()) {
+        let spos = pos + beg.len();
+        if let Some(mut epos) = find(&header[spos..], end.as_bytes()) {
+            epos = epos + spos;
+            //println!("=> [{}]", String::from_utf8_lossy(&header[spos..epos]).to_string());
+            return Some((spos, epos));
+        }
+    }
+    None
+}
+
+fn get_encoding(header: &[u8]) -> Option<&str> {
+    if let Some((s_decl, e_decl)) = find_content_bounds(header, "<?xml ", "?>") {
+        let encoding = 
+            if let Some((s_enc, e_enc)) = find_content_bounds(&header[s_decl..e_decl], "encoding=\"", "\"") {
+                String::from_utf8_lossy(&header[s_decl+s_enc..s_decl+e_enc]).to_lowercase()
+            } else if let Some((s_enc, e_enc)) = find_content_bounds(&header[s_decl..e_decl], "encoding='", "'") {
+                String::from_utf8_lossy(&header[s_decl+s_enc..s_decl+e_enc]).to_lowercase()
+            } else {
+                String::default()
+            };
+        match encoding.as_str() {
+            "utf-8" => Some("UTF-8"),
+            "koi8-r" => Some("koi8-r"),
+            "windows-1251" => Some("CP1251"),
+            _ => None,
+        }
+
+    } else {
+        None
+    }
+}
+
+fn concert_utf8(header: Vec<u8>) -> Option<String> {
+    if let Some(encoding) = get_encoding(&header[0..CHUNK]) {
+        if encoding.to_lowercase() != "utf-8" {
+            return header.decode_with_encoding(encoding);
+        }
+    }
+    Some(String::from_utf8_lossy(&header).to_string())
+}
+
+fn load_header<F: Read>(file: &mut F) -> Option<String> {    
     let mut buffer = [0u8; CHUNK];
 
     const CLOSE_DS_TAG: &[u8] = "</description>".as_bytes();
@@ -75,7 +126,7 @@ fn load_header<F: Read>(file: &mut F) -> Option<String> {
             header.resize(lookup_window_pos + pos, 0u8); 
             header.extend_from_slice(CLOSE_DS_TAG);
             header.extend_from_slice(CLOSE_FB_TAG);
-            return Some(String::from_utf8_lossy(&header).to_string());
+            return concert_utf8(header);
         }
     }
     return None;
