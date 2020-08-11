@@ -40,11 +40,12 @@ fn main() {
             match FictionBook::try_from(header.as_bytes()) {
                 Ok(fb) => {
                     let langs = fb.description.title_info.lang.iter().map(|lang| lang.text.clone()).collect::<Vec<String>>().join(",");
-                    println!("{:>5}, [{}] {} - {}", 
+                    println!("{:>5}, [{}] {} - {} {}",
                         i, 
                         langs,
                         fb.get_title(),
-                        fb.get_book_name().unwrap_or_default()
+                        fb.get_book_name().unwrap_or_default(),
+                        fb.get_genres().iter().map(|g| g.text.clone()).collect::<Vec<String>>().join(", ")
                         );
                 },
                 Err(_) =>  {
@@ -62,7 +63,7 @@ pub fn find(haystack: &[u8], needle: &[u8]) -> Option<usize> {
     haystack.windows(needle.len()).position(|window| window == needle)
 }
 
-fn find_content_bounds(header: &[u8], beg: &str, end: &str) -> Option<(usize, usize)> {    
+fn find_bounds(header: &[u8], beg: &str, end: &str) -> Option<(usize, usize)> {
     if let Some(pos) = find(header, beg.as_bytes()) {
         let spos = pos + beg.len();
         if let Some(mut epos) = find(&header[spos..], end.as_bytes()) {
@@ -75,19 +76,19 @@ fn find_content_bounds(header: &[u8], beg: &str, end: &str) -> Option<(usize, us
 }
 
 fn get_encoding(header: &[u8]) -> Option<&str> {
-    if let Some((s_decl, e_decl)) = find_content_bounds(header, "<?xml ", "?>") {
+    if let Some((s_decl, e_decl)) = find_bounds(header, "<?xml ", "?>") {
         let encoding = 
-            if let Some((s_enc, e_enc)) = find_content_bounds(&header[s_decl..e_decl], "encoding=\"", "\"") {
+            if let Some((s_enc, e_enc)) = find_bounds(&header[s_decl..e_decl], "encoding=\"", "\"") {
                 String::from_utf8_lossy(&header[s_decl+s_enc..s_decl+e_enc]).to_lowercase()
-            } else if let Some((s_enc, e_enc)) = find_content_bounds(&header[s_decl..e_decl], "encoding='", "'") {
+            } else if let Some((s_enc, e_enc)) = find_bounds(&header[s_decl..e_decl], "encoding='", "'") {
                 String::from_utf8_lossy(&header[s_decl+s_enc..s_decl+e_enc]).to_lowercase()
             } else {
                 String::default()
             };
         match encoding.as_str() {
-            "utf-8" => Some("UTF-8"),
+            "utf-8" => Some("utf-8"),
             "koi8-r" => Some("koi8-r"),
-            "windows-1251" => Some("CP1251"),
+            "windows-1251" => Some("cp1251"),
             _ => None,
         }
 
