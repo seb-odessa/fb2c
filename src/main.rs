@@ -8,6 +8,8 @@ use iconv::IconvDecodable;
 use std::{fs, path};
 use std::io::Read;
 use std::convert::TryFrom;
+use std::collections::HashSet;
+use lib::database;
 
 const CHUNK: usize = 128;
 
@@ -32,34 +34,54 @@ fn main() {
     let file = fs::File::open(&path).unwrap();    
     let mut archive = zip::ZipArchive::new(file).unwrap();
     let mut error_counter = 0;
+    let mut skip_counter = 0;
+    let mut manager = database::Manager::new();
+    let russian: HashSet<String> = vec!["ru", "rus", "russian", "ru-ru"]
+                .into_iter()
+                .map(|s| String::from(s))
+                .collect();
+
     for i in 0..archive.len() {
         let mut zip_file = archive.by_index(i).unwrap();
-
         if let Some(header) = load_header(&mut zip_file)
         {
             match FictionBook::try_from(header.as_bytes()) {
                 Ok(fb) => {
-                    let langs = fb.description.title_info.lang.iter().map(|lang| lang.text.clone()).collect::<Vec<String>>().join(",");
-                    println!("{:>5}, [{}] {} - {} {}",
-                        i, 
-                        langs,
-                        fb.get_title(),
-                        fb.get_book_name().unwrap_or_default(),
-                        fb.get_genres().iter().map(|g| g.text.clone()).collect::<Vec<String>>().join(", ")
-                        );
+                    let lang = if let Some(ref el) = fb.description.title_info.lang {
+                        &el.text
+                    } else {
+                        "ru"
+                    }.to_lowercase();
+
+                    if russian.contains(&lang) {
+                        handle(&mut manager, &fb);
+                        print!(".");
+                    } else {
+                        print!("!");
+                        skip_counter += 1;
+                    }
                 },
-                Err(_) =>  {
+                Err(err) =>  {
+                    println!();
+                    println!("{} : {:?}", zip_file.name(), err);
                     error_counter += 1;
                 }
             }
-        }        
+        }
     }
-
+    let saved = manager.flush().expect("Failed to save data to the DB");
+    println!();
     println!("Total books in archive: {} ", archive.len());
     println!("Broken books found: {} ", error_counter);
+    println!("Skipped by language filter: {} ", skip_counter);
+    println!("Stored Authors: {} ", saved);
 }
 
-pub fn find(haystack: &[u8], needle: &[u8]) -> Option<usize> {
+fn handle(manager: &mut database::Manager, fb: &FictionBook) {
+    manager.add(&fb);
+}
+
+fn find(haystack: &[u8], needle: &[u8]) -> Option<usize> {
     haystack.windows(needle.len()).position(|window| window == needle)
 }
 
@@ -110,15 +132,27 @@ fn load_header<F: Read>(file: &mut F) -> Option<String> {
     let mut buffer = [0u8; CHUNK];
 
     const CLOSE_DS_TAG: &[u8] = "</description>".as_bytes();
-    const CLOSE_FB_TAG: &[u8] = "</FictionBook>".as_bytes();    
+    const CLOSE_FB_TAG: &[u8] = "</FictionBook>".as_bytes();
+    const BYTE_ORDER_MARK: [u8; 3] = [0xEF, 0xBB, 0xBF];
     
     let stream = file.by_ref();
     let mut header: Vec<u8> = Vec::new();
-    while let Some(readed) = stream.take(CHUNK as u64).read(&mut buffer).ok() {
-        if 0 == readed {
+    while let Some(read) = stream.take(CHUNK as u64).read(&mut buffer).ok() {
+        if 0 == read {
             break;
         }
-        header.extend_from_slice(&buffer[0..readed]);
+
+        let mut xml_pos = 0;
+        if header.is_empty() {
+            // Let's skip BOM if exists
+            if let Some(pos) = find(&buffer[0..read], &BYTE_ORDER_MARK) {
+                if 0 == pos {
+                    xml_pos = BYTE_ORDER_MARK.len();
+                }
+            }
+        }
+
+        header.extend_from_slice(&buffer[xml_pos..read]);
         let lookup_window_pos = if header.len() > CHUNK + CLOSE_DS_TAG.len() {
             header.len() - CHUNK - CLOSE_DS_TAG.len()
         } else {

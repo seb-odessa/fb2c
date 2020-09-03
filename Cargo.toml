@@ -13,6 +13,8 @@ path = "src/lib/lib.rs"
 
 [dependencies]
     fb2parser = { git = "https://github.com/seb-odessa/fb2parser.git" }
-    clap = "*"
+    clap = "2.33.2"
     zip = "0.5.6"
     iconv = {git = "https://github.com/andelf/rust-iconv.git" }
+    diesel = { version = "1.4.5", features = ["sqlite", "numeric"] }
+    dotenv = "0.15.0"
