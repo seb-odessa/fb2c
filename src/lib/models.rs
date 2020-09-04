@@ -1,76 +1,81 @@
 use std::convert::From;
 use super::schema::authors;
-use super::schema::emails;
-//use super::schema::homepages;
-use fb2parser::Author;
-use fb2parser::Translator;
+use fb2parser;
 
-#[derive(Queryable)]
-pub struct AuthorQuery {
-    pub id: i64,
-    pub first_name: Option<String>,
-    pub middle_name: Option<String>,
-    pub last_name: Option<String>,
-    pub nickname: Option<String>,
-    pub lib_id: Option<String>,
-}
+pub type Id = i32;
+pub type QueryResult<T> = std::result::Result<T, diesel::result::Error>;
+pub use diesel::sqlite::SqliteConnection as Connection;
 
-
-#[derive(Insertable, PartialEq, Eq, Hash)]
+#[derive(Insertable, Queryable)]
 #[table_name="authors"]
-pub struct AuthorNew {
-    pub first_name: Option<String>,
-    pub middle_name: Option<String>,
-    pub last_name: Option<String>,
-    pub nickname: Option<String>,
-    pub lib_id: Option<String>,
+pub struct AuthorRecord {
+    pub id: Id,
+    pub first_name: String,
+    pub middle_name: String,
+    pub last_name: String,
+    pub nickname: String,
+    pub uuid: String,
 }
-impl From<&Author> for AuthorNew{
-    fn from(src: &Author) -> Self {
-        Self {
-            first_name: src.get_first_name(),
-            middle_name: src.get_middle_name(),
-            last_name: src.get_last_name(),
-            nickname: src.get_nickname(),
-            lib_id: src.get_id()
-        }
+impl AuthorRecord {
+    pub fn load(conn: &Connection, id: Id) -> QueryResult<Self> {
+        use crate::schema::authors::dsl::authors;
+        use crate::diesel::RunQueryDsl;
+        use crate::diesel::QueryDsl;
+        authors.find(id).first(conn)
     }
-}
-impl From<&Translator> for AuthorNew{
-    fn from(src: &Translator) -> Self {
-        Self {
-            first_name: src.get_first_name(),
-            middle_name: src.get_middle_name(),
-            last_name: src.get_last_name(),
-            nickname: src.get_nickname(),
-            lib_id: src.get_id()
-        }
+
+    pub fn find_id(conn: &Connection, name: &AuthorName) -> QueryResult<Id> {
+        use crate::schema::authors::dsl::*;
+        use crate::diesel::ExpressionMethods;
+        use crate::diesel::RunQueryDsl;
+        use crate::diesel::QueryDsl;
+        authors
+            .filter(first_name.eq(&name.first_name))
+            .filter(middle_name.eq(&name.middle_name))
+            .filter(last_name.eq(&name.last_name))
+            .filter(nickname.eq(&name.nickname))
+            .filter(uuid.eq(&name.uuid))
+            .select(id)
+            .first(conn)
     }
+
+    pub fn save(conn: &Connection, name: &AuthorName) -> QueryResult<usize> {
+        use crate::diesel::RunQueryDsl;       
+        diesel::insert_into(authors::table).values(name).execute(conn)
+    }
+
 }
 
-
-#[derive(Queryable)]
-pub struct EmailQuery {
-    pub id: i64,
-    pub owner: i64,
-    pub email: String,
-}
 #[derive(Insertable)]
-#[table_name="emails"]
-pub struct NewEmail<'a> {
-    pub owner: i32,
-    pub email: &'a str,
+#[table_name="authors"]
+#[derive(Eq, PartialEq, Hash, Clone, Debug)]
+pub struct AuthorName {
+    pub first_name: String,
+    pub middle_name: String,
+    pub last_name: String,
+    pub nickname: String,
+    pub uuid: String,
+}
+impl From<&fb2parser::Author> for AuthorName{
+    fn from(src: &fb2parser::Author) -> Self {
+        Self {
+            first_name: src.get_first_name().unwrap_or_default(),
+            middle_name: src.get_middle_name().unwrap_or_default(),
+            last_name: src.get_last_name().unwrap_or_default(),
+            nickname: src.get_nickname().unwrap_or_default(),
+            uuid: src.get_id().unwrap_or_default()
+        }
+    }
+}
+impl From<&fb2parser::Translator> for AuthorName{
+    fn from(src: &fb2parser::Translator) -> Self {
+        Self {
+            first_name: src.get_first_name().unwrap_or_default(),
+            middle_name: src.get_middle_name().unwrap_or_default(),
+            last_name: src.get_last_name().unwrap_or_default(),
+            nickname: src.get_nickname().unwrap_or_default(),
+            uuid: src.get_id().unwrap_or_default()
+        }
+    }
 }
 
-#[derive(Queryable)]
-pub struct HomepageQuery {
-    pub id: i32,
-    pub owner: i32,
-    pub homepage: String,
-}
-// #[derive(Insertable)]
-// #[table_name="homepages"]
-// pub struct NewHomePage<'a> {
-//     pub owner: i32,
-//     pub homepage: &'a str,
-// }

@@ -36,6 +36,7 @@ fn main() {
     let mut error_counter = 0;
     let mut skip_counter = 0;
     let mut manager = database::Manager::new();
+    
     let russian: HashSet<String> = vec!["ru", "rus", "russian", "ru-ru"]
                 .into_iter()
                 .map(|s| String::from(s))
@@ -54,31 +55,27 @@ fn main() {
                     }.to_lowercase();
 
                     if russian.contains(&lang) {
-                        handle(&mut manager, &fb);
-                        print!(".");
+                        manager.handle(&fb);
                     } else {
-                        print!("!");
                         skip_counter += 1;
                     }
                 },
                 Err(err) =>  {
                     println!();
-                    println!("{} : {:?}", zip_file.name(), err);
+                    println!("{} : {:?} '{}'", zip_file.name(), err, header);
                     error_counter += 1;
                 }
             }
         }
     }
-    let saved = manager.flush().expect("Failed to save data to the DB");
     println!();
     println!("Total books in archive: {} ", archive.len());
     println!("Broken books found: {} ", error_counter);
     println!("Skipped by language filter: {} ", skip_counter);
-    println!("Stored Authors: {} ", saved);
-}
-
-fn handle(manager: &mut database::Manager, fb: &FictionBook) {
-    manager.add(&fb);
+    println!("Authors handled: {}", manager.author_count);
+    println!("Authors hit cache: {}", manager.author_cache_hit);
+    println!("Authors quered from DB: {}", manager.author_quered);
+    println!("Authors inserted into DB: {}", manager.author_inserted);
 }
 
 fn find(haystack: &[u8], needle: &[u8]) -> Option<usize> {
@@ -101,13 +98,13 @@ fn get_encoding(header: &[u8]) -> Option<&str> {
     if let Some((s_decl, e_decl)) = find_bounds(header, "<?xml ", "?>") {
         let encoding = 
             if let Some((s_enc, e_enc)) = find_bounds(&header[s_decl..e_decl], "encoding=\"", "\"") {
-                String::from_utf8_lossy(&header[s_decl+s_enc..s_decl+e_enc]).to_lowercase()
+                String::from_utf8_lossy(&header[s_decl+s_enc..s_decl+e_enc]).to_string()
             } else if let Some((s_enc, e_enc)) = find_bounds(&header[s_decl..e_decl], "encoding='", "'") {
-                String::from_utf8_lossy(&header[s_decl+s_enc..s_decl+e_enc]).to_lowercase()
+                String::from_utf8_lossy(&header[s_decl+s_enc..s_decl+e_enc]).to_string()
             } else {
                 String::default()
             };
-        match encoding.as_str() {
+        match encoding.to_lowercase().as_str() {
             "utf-8" => Some("utf-8"),
             "koi8-r" => Some("koi8-r"),
             "windows-1251" => Some("cp1251"),
@@ -119,9 +116,10 @@ fn get_encoding(header: &[u8]) -> Option<&str> {
     }
 }
 
-fn concert_utf8(header: Vec<u8>) -> Option<String> {
-    if let Some(encoding) = get_encoding(&header[0..CHUNK]) {
-        if encoding.to_lowercase() != "utf-8" {
+fn convert_utf8(header: Vec<u8>) -> Option<String> {
+    let end = std::cmp::min(header.len(), CHUNK);
+    if let Some(encoding) = get_encoding(&header[0..end]) {
+        if encoding != "utf-8" {
             return header.decode_with_encoding(encoding);
         }
     }
@@ -163,7 +161,7 @@ fn load_header<F: Read>(file: &mut F) -> Option<String> {
             header.resize(lookup_window_pos + pos, 0u8); 
             header.extend_from_slice(CLOSE_DS_TAG);
             header.extend_from_slice(CLOSE_FB_TAG);
-            return concert_utf8(header);
+            return convert_utf8(header);
         }
     }
     return None;
@@ -176,8 +174,7 @@ mod main_app {
     #[test]
     fn test_load_header() {
         //
-        let data = 
-"123456789012345678901234567890123456789012345678901234567890</description><body>..................................................................</body>".as_bytes();
+        let data = "123456789012345678901234567890123456789012345678901234567890</description><body>..................................................................</body>".as_bytes();
         //ABCD
         let mut stream = data.clone();
 
@@ -185,8 +182,6 @@ mod main_app {
 
         println!(">{}", String::from_utf8_lossy(data));
         println!(">{}", readed.unwrap_or_default());
-
-        assert!(false);
 
         let _dd = r##"
 

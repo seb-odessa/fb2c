@@ -1,27 +1,16 @@
 -- Your SQL goes here
 CREATE TABLE authors (
   id INTEGER NOT NULL PRIMARY KEY,
-  first_name TEXT,
-  middle_name TEXT,
-  last_name TEXT,
-  nickname TEXT,
-  lib_id TEXT,
-  CONSTRAINT unique_authors UNIQUE(first_name, middle_name, last_name, nickname) ON CONFLICT IGNORE
+  first_name TEXT NOT NULL,
+  middle_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  nickname TEXT NOT NULL,
+  uuid TEXT NOT NULL,
+  CONSTRAINT unique_authors UNIQUE(first_name, middle_name, last_name, nickname, uuid) ON CONFLICT IGNORE
 );
 
-CREATE TABLE homepages (
-    id INTEGER NOT NULL PRIMARY KEY,
-    owner id INTEGER NOT NULL,
-    homepage TEXT NOT NULL,
-    FOREIGN KEY(owner) REFERENCES authors(id),
-    CONSTRAINT unique_homepages UNIQUE(homepage) ON CONFLICT IGNORE
-);
-
-CREATE TABLE emails (
-    id INTEGER NOT NULL PRIMARY KEY,
-    owner id INTEGER NOT NULL,
-    email TEXT NOT NULL,
-    FOREIGN KEY(owner) REFERENCES authors(id),
-    CONSTRAINT unique_emails UNIQUE(email) ON CONFLICT IGNORE
+CREATE TABLE books (
+  id INTEGER NOT NULL PRIMARY KEY,
+  book_title TEXT NOT NULL
 );
 

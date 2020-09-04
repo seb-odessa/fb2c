@@ -1,11 +1,18 @@
 table! {
     authors (id) {
         id -> Integer,
-        first_name -> Nullable<Text>,
-        middle_name -> Nullable<Text>,
-        last_name -> Nullable<Text>,
-        nickname -> Nullable<Text>,
-        lib_id -> Nullable<Text>,
+        first_name -> Text,
+        middle_name -> Text,
+        last_name -> Text,
+        nickname -> Text,
+        uuid -> Text,
+    }
+}
+
+table! {
+    books (id) {
+        id -> Integer,
+        book_title -> Text,
     }
 }
 
@@ -30,6 +37,7 @@ joinable!(homepages -> authors (owner));
 
 allow_tables_to_appear_in_same_query!(
     authors,
+    books,
     emails,
     homepages,
 );
