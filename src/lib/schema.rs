@@ -1,4 +1,13 @@
 table! {
+    archives (id) {
+        id -> Integer,
+        zip_name -> Text,
+        zip_path -> Text,
+        zip_md5 -> Text,
+    }
+}
+
+table! {
     authors (id) {
         id -> Integer,
         first_name -> Text,
@@ -16,28 +25,8 @@ table! {
     }
 }
 
-table! {
-    emails (id) {
-        id -> Integer,
-        owner -> Integer,
-        email -> Text,
-    }
-}
-
-table! {
-    homepages (id) {
-        id -> Integer,
-        owner -> Integer,
-        homepage -> Text,
-    }
-}
-
-joinable!(emails -> authors (owner));
-joinable!(homepages -> authors (owner));
-
 allow_tables_to_appear_in_same_query!(
+    archives,
     authors,
     books,
-    emails,
-    homepages,
 );

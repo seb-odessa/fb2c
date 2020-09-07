@@ -1,10 +1,6 @@
 use std::convert::From;
-use super::schema::authors;
-use fb2parser;
-
-pub type Id = i32;
-pub type QueryResult<T> = std::result::Result<T, diesel::result::Error>;
-pub use diesel::sqlite::SqliteConnection as Connection;
+use crate::schema::authors;
+use super::*;
 
 #[derive(Insertable, Queryable)]
 #[table_name="authors"]
@@ -17,33 +13,32 @@ pub struct AuthorRecord {
     pub uuid: String,
 }
 impl AuthorRecord {
-    pub fn load(conn: &Connection, id: Id) -> QueryResult<Self> {
+    pub fn load(conn: &SqliteConnection, id: Id) -> QueryResult<Self> {
         use crate::schema::authors::dsl::authors;
         use crate::diesel::RunQueryDsl;
         use crate::diesel::QueryDsl;
         authors.find(id).first(conn)
     }
 
-    pub fn find_id(conn: &Connection, name: &AuthorName) -> QueryResult<Id> {
+    pub fn find(conn: &SqliteConnection, value: &AuthorName) -> QueryResult<Id> {
         use crate::schema::authors::dsl::*;
         use crate::diesel::ExpressionMethods;
         use crate::diesel::RunQueryDsl;
         use crate::diesel::QueryDsl;
         authors
-            .filter(first_name.eq(&name.first_name))
-            .filter(middle_name.eq(&name.middle_name))
-            .filter(last_name.eq(&name.last_name))
-            .filter(nickname.eq(&name.nickname))
-            .filter(uuid.eq(&name.uuid))
+            .filter(first_name.eq(&value.first_name))
+            .filter(middle_name.eq(&value.middle_name))
+            .filter(last_name.eq(&value.last_name))
+            .filter(nickname.eq(&value.nickname))
+            .filter(uuid.eq(&value.uuid))
             .select(id)
             .first(conn)
     }
 
-    pub fn save(conn: &Connection, name: &AuthorName) -> QueryResult<usize> {
+    pub fn save(conn: &SqliteConnection, value: &AuthorName) -> QueryResult<usize> {
         use crate::diesel::RunQueryDsl;       
-        diesel::insert_into(authors::table).values(name).execute(conn)
+        diesel::insert_into(authors::table).values(value).execute(conn)
     }
-
 }
 
 #[derive(Insertable)]
@@ -78,4 +73,3 @@ impl From<&fb2parser::Translator> for AuthorName{
         }
     }
 }
-
