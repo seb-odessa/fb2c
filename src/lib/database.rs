@@ -4,6 +4,7 @@ use std::collections::HashMap;
 use std::hash::Hash;
 use std::fmt::Debug;
 
+use crate::zip::read::ZipFile;
 use dotenv::dotenv;
 use fb2parser::FictionBook;
 
@@ -38,6 +39,13 @@ pub struct Storage<T: Clone+Eq+Hash+Debug> {
     pub quered: u64,
     pub added: u64,
 }
+impl <T: Clone+Eq+Hash+Debug> Drop for Storage<T> {
+    fn drop(&mut self) {
+        println!("Storage<{}>", std::any::type_name::<T>());                
+        println!("   quered/inserted/total: {}/{}/{}", self.quered, self.added, self.count);
+        println!("   cache hits/size: {}/{}", self.hits, self.map.len());
+    }
+}
 impl <T: Clone+Eq+Hash+Debug> Storage<T> {
     pub fn new() -> Self {
         Self{
@@ -49,60 +57,78 @@ impl <T: Clone+Eq+Hash+Debug> Storage<T> {
         }
     }
 
-    pub fn report(&self) {
-        println!("records total/quered/inserted: {}/{}/{}", self.count, self.quered, self.added);
-        println!("cache hits/size: {}/{}", self.hits, self.map.len());
-    }
-
-    pub fn add<F,S>(&mut self, conn: &SqliteConnection, value: T, find: F, save: S) -> Id 
-        where 
-            F: Fn(&SqliteConnection, &T) -> QueryResult<Id>, 
-            S: Fn(&SqliteConnection, &T) -> QueryResult<usize> 
+    pub fn save<Record>(&mut self, conn: &SqliteConnection, value: T) -> Id 
+    where 
+        Record: Find<T> + Save<T>
     {
         self.count += 1;
 
         if let Some((_, id)) = self.map.get_key_value(&value) {
             self.hits += 1;
             return *id;
-        } else if let Some(id) = find(conn, &value).ok() {
+        } else if let Some(id) = Record::find(conn, &value).ok() {
             self.map.insert(value, id);
             self.quered += 1;
             return id;
         } else {            
-            save(conn, &value).expect(&format!("Failed to save {:?}", value));
-            let id = find(conn, &value).expect(&format!("Failed to query id for {:?}", value));
+            Record::save(conn, &value).expect(&format!("Failed to save {:?}", value));
+            let id = Record::find(conn, &value).expect(&format!("Failed to query id for {:?}", value));
             self.map.insert(value, id);
             self.added += 1;
             return id;
         }
     }
+
 }
 
 pub struct Manager{
     conn: SqliteConnection,
-    pub archives: Storage<ArchiveName>,
-    pub authors: Storage<AuthorName>,
-    pub titles: Storage<BookName>
+    pub archives: Storage<Archive>,
+    pub books: Storage<Book>,
+    pub authors: Storage<Author>,
+    pub author_links: Storage<AuthorLink>,
+    pub titles: Storage<Title>,
+    pub title_links: Storage<TitleLink>,
+    pub genres: Storage<Genre>,
+    pub genre_links: Storage<GenreLink>,
 }
 impl Manager {
     pub fn new() -> Self {
         Self{
             conn: establish_connection(),
             archives: Storage::new(),
+            books: Storage::new(),
             authors: Storage::new(),
+            author_links: Storage::new(),
             titles: Storage::new(),
+            title_links: Storage::new(),
+            genres: Storage::new(),
+            genre_links: Storage::new(),
         }
     }
 
-    pub fn add_archive(&mut self, archive: ArchiveName) -> Id {
-        self.archives.add(&self.conn, archive, ArchiveRecord::find, ArchiveRecord::save)
+    pub fn save_archive(&mut self, archive: Archive) -> Id {
+        self.archives.save::<ArchiveRecord>(&self.conn, archive)
     }
 
-    pub fn add_book(&mut self, &_arc_id: &Id, fb2: &FictionBook) {
+    pub fn save_book(&mut self, arc_id: Id, file: &ZipFile) -> Id {
+        self.books.save::<BookRecord>(&self.conn, Book::new(arc_id, file))
+    }
+
+    pub fn save_content(&mut self, book_id: Id, fb2: &FictionBook) {
+        let conn = &self.conn;
         if let Some(ref title) = fb2.description.title_info.book_title {
-            let _tid = self.titles.add(&self.conn, BookName::from(title), BookRecord::find, BookRecord::save);
-            for author in &fb2.description.title_info.authors {
-                let _aid = self.authors.add(&self.conn, AuthorName::from(author), AuthorRecord::find, AuthorRecord::save);
+            {
+                let id = self.titles.save::<TitleRecord>(conn, Title::from(title));
+                self.title_links.save::<TitleLinkRecord>(conn, TitleLink::new(book_id, id));    
+            }
+            for author in &fb2.get_authors() {
+                let id = self.authors.save::<AuthorRecord>(&self.conn, Author::from(author));
+                self.author_links.save::<AuthorLinkRecord>(conn, AuthorLink::new(book_id, id));
+            }
+            for genre in &fb2.get_genres() {
+                let id = self.genres.save::<GenreRecord>(conn, Genre::from(genre));
+                self.genre_links.save::<GenreLinkRecord>(conn, GenreLink::new(book_id, id));
             }
         }
     }

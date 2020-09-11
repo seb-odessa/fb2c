@@ -3,86 +3,88 @@ use crate::md5;
 use crate::schema::archives;
 use super::*;
 
+#[derive(Insertable)]
+#[table_name="archives"]
+#[derive(Eq, PartialEq, Hash, Clone, Debug)]
+pub struct Archive {
+    pub name: String,
+    pub path: String,
+    pub size: i64,
+    pub md5: String,
+}
+impl Archive {
+    pub fn new(archive: &Path) -> Self {
+        use std::fs;
+        Self {
+            name: archive.file_name()
+                    .expect(&format!("Failed to get file name of '{}'", archive.to_string_lossy()))
+                    .to_string_lossy().to_string(),
+                path: archive.canonicalize()
+                    .expect(&format!("Failed to build absolute path of the '{}'", archive.to_string_lossy()))
+                    .to_string_lossy().to_string(),
+                size: fs::metadata(archive).map(|meta| meta.len()).unwrap_or_default() as i64,
+                md5: calc_md5(archive),
+        }
+    }
+}
+
 #[derive(Insertable, Queryable)]
 #[table_name="archives"]
 pub struct ArchiveRecord {
     pub id: Id,
-    pub zip_name: String,
-    pub zip_path: String,
-    pub zip_md5: String,
+    pub name: String,
+    pub path: String,
+    pub size: i64,
+    pub md5: String,
+    pub done: bool,
 }
-impl ArchiveRecord {
-    pub fn load(conn: &SqliteConnection, id: Id) -> QueryResult<Self> {
+
+type Base = Archive;
+type Record = ArchiveRecord;
+impl Load<Record> for Record {
+    fn load(conn: &SqliteConnection, id: Id) -> QueryResult<Self> {
         use crate::schema::archives::dsl::archives;
         use crate::diesel::RunQueryDsl;
         use crate::diesel::QueryDsl;
         archives.find(id).first(conn)
     }
-
-    pub fn find(conn: &SqliteConnection, value: &ArchiveName) -> QueryResult<Id> {
+}
+impl Find<Base> for Record {
+    fn find(conn: &SqliteConnection, value: &Base) -> QueryResult<Id> {
         use crate::schema::archives::dsl::*;
         use crate::diesel::ExpressionMethods;
         use crate::diesel::RunQueryDsl;
         use crate::diesel::QueryDsl;
         archives
-            .filter(zip_name.eq(&value.zip_name))
-            .filter(zip_path.eq(&value.zip_path))
-            .filter(zip_md5.eq(&value.zip_md5))
+            .filter(name.eq(&value.name))
+            .filter(path.eq(&value.path))
+            .filter(size.eq(&value.size))
+            .filter(md5.eq(&value.md5))
             .select(id)
             .first(conn)
     }
-
-    pub fn find_by_md5(conn: &SqliteConnection, md5sum: &str) -> QueryResult<Id> {
-        use crate::schema::archives::dsl::*;
-        use crate::diesel::ExpressionMethods;
-        use crate::diesel::RunQueryDsl;
-        use crate::diesel::QueryDsl;
-        archives.filter(zip_md5.eq(md5sum)).select(id).first(conn)
-    }
-
-    pub fn save(conn: &SqliteConnection, value: &ArchiveName) -> QueryResult<usize> {
+}
+impl Save<Base> for Record {
+    fn save(conn: &SqliteConnection, value: &Base) -> QueryResult<usize> {
         use crate::diesel::RunQueryDsl;       
         diesel::insert_into(archives::table).values(value).execute(conn)
     }
 }
 
-#[derive(Insertable)]
-#[table_name="archives"]
-#[derive(Eq, PartialEq, Hash, Clone, Debug)]
-pub struct ArchiveName {
-    pub zip_name: String,
-    pub zip_path: String,
-    pub zip_md5: String,
-}
-impl ArchiveName {
-    pub fn new(path: &Path) -> Self {
-        Self {
-            zip_name: path.file_stem()
-                .expect(&format!("Failed to get file name of '{}'", path.to_string_lossy()))
-                .to_string_lossy().to_string(),
-            zip_path: path.canonicalize()
-                .expect(&format!("Failed to build absolute path of the '{}'", path.to_string_lossy()))
-                .to_string_lossy().to_string(),
-            zip_md5: Self::md5(path),
+
+fn calc_md5(archive: &Path) -> String {
+    use std::io::prelude::*;
+    use std::fs::File;
+
+    let mut ctx = md5::Context::new();
+    let mut file = File::open(archive).expect(&format!("Can't open file '{}'", archive.to_string_lossy()));
+    let mut buffer = [0; 1024*1024];
+    while let Some(readed) = file.read(&mut buffer).ok() {
+        if readed > 0 {
+            ctx.write(&buffer[0..readed]).expect("Failed to calculate md5");
+        } else {
+            break;
         }
     }
-
-    pub fn md5(path: &Path) -> String {
-        use std::io::prelude::*;
-        use std::fs::File;
-
-        let mut ctx = md5::Context::new();
-        let mut file = File::open(path).expect(&format!("Can't open file '{}'", path.to_string_lossy()));
-        let mut buffer = [0; 1024*1024];
-        while let Some(readed) = file.read(&mut buffer).ok() {
-            if readed > 0 {
-                ctx.write(&buffer[0..readed]).expect("Failed to calculate md5");
-            } else {
-                break;
-            }
-        }
-        format!("{:X}", ctx.compute())
-    }
+    format!("{:X}", ctx.compute())
 }
-
-

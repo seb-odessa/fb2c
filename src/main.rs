@@ -10,7 +10,7 @@ use std::io::Read;
 use std::convert::TryFrom;
 use std::collections::HashSet;
 use lib::database;
-use lib::models::ArchiveName;
+use lib::models::Archive;
 
 const CHUNK: usize = 128;
 
@@ -37,7 +37,7 @@ fn main() {
     let mut error_counter = 0;
     let mut skip_counter = 0;
     let mut manager = database::Manager::new();
-    let arch_id = manager.add_archive(ArchiveName::new(&path));
+    let arch_id = manager.save_archive(Archive::new(&path));
     
     let russian: HashSet<String> = vec!["ru", "rus", "russian", "ru-ru"]
                 .into_iter()
@@ -57,7 +57,8 @@ fn main() {
                     }.to_lowercase();
 
                     if russian.contains(&lang) {
-                        manager.add_book(&arch_id, &fb);
+                        let book_id = manager.save_book(arch_id, &zip_file);
+                        manager.save_content(book_id, &fb);
                     } else {
                         skip_counter += 1;
                     }
@@ -74,11 +75,6 @@ fn main() {
     println!("Total books in archive: {} ", archive.len());
     println!("Broken books found: {} ", error_counter);
     println!("Skipped by language filter: {} ", skip_counter);
-    println!("Authors Report:");
-    manager.authors.report();
-    println!("Book Title Report:");
-    manager.titles.report();
-
 }
 
 fn find(haystack: &[u8], needle: &[u8]) -> Option<usize> {

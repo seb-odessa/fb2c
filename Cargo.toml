@@ -19,4 +19,6 @@ path = "src/lib/lib.rs"
     diesel = { version = "1.4.5", features = ["sqlite", "numeric"] }
     dotenv = "0.15.0"
     md5 = "0.7.0"
+    
+
 

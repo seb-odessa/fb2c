@@ -1,7 +1,17 @@
 
 
-DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS titles;
 DROP TABLE IF EXISTS authors;
+DROP TABLE IF EXISTS genres;
 
-
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS links;
 DROP TABLE IF EXISTS archives;
+
+DROP TABLE IF EXISTS title_links;
+DROP TABLE IF EXISTS author_links;
+DROP TABLE IF EXISTS genre_links;
+
+DROP TABLE IF EXISTS genre_groups;
+DROP TABLE IF EXISTS genre_names;
+DROP TABLE IF EXISTS genre_synonyms;
