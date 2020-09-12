@@ -15,3 +15,7 @@ DROP TABLE IF EXISTS genre_links;
 DROP TABLE IF EXISTS genre_groups;
 DROP TABLE IF EXISTS genre_names;
 DROP TABLE IF EXISTS genre_synonyms;
+
+DROP VIEW IF EXISTS genres_view;
+DROP VIEW IF EXISTS titles_view;
+DROP VIEW IF EXISTS authors_view;

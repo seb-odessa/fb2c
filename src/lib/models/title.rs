@@ -16,7 +16,7 @@ impl From<&fb2parser::BookTitle> for Title{
     }
 }
 
-#[derive(Insertable, Queryable)]
+#[derive(Insertable, Queryable, Debug, Clone)]
 #[table_name="titles"]
 pub struct TitleRecord {
     pub id: Id,
@@ -52,3 +52,16 @@ impl Save<Base> for Record {
     }
 }
 
+#[derive(Queryable, Debug, Clone)]
+pub struct TitleView {
+    pub id: Id,
+    pub title: String,
+}
+impl Load<TitleView> for TitleView {
+    fn load(conn: &SqliteConnection, id: Id) -> QueryResult<Self> {
+        use crate::schema_views::titles_view::dsl::titles_view;
+        use crate::diesel::RunQueryDsl;
+        use crate::diesel::QueryDsl;
+        titles_view.find(id).first(conn)
+    }
+}

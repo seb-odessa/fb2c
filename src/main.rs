@@ -64,14 +64,12 @@ fn main() {
                     }
                 },
                 Err(err) =>  {
-                    println!();
                     println!("{} : {:?} '{}'", zip_file.name(), err, header);
                     error_counter += 1;
                 }
             }
         }
     }
-    println!();
     println!("Total books in archive: {} ", archive.len());
     println!("Broken books found: {} ", error_counter);
     println!("Skipped by language filter: {} ", skip_counter);

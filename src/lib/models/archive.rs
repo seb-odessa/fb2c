@@ -28,7 +28,7 @@ impl Archive {
     }
 }
 
-#[derive(Insertable, Queryable)]
+#[derive(Insertable, Queryable, Debug, Clone)]
 #[table_name="archives"]
 pub struct ArchiveRecord {
     pub id: Id,

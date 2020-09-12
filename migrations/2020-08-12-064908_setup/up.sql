@@ -15,7 +15,8 @@ CREATE TABLE books (
   compressed_size BIGINT NOT NULL,
   size            BIGINT NOT NULL,
   crc32           BIGINT NOT NULL,
-  offset          BIGINT NOT NULL
+  offset          BIGINT NOT NULL,
+  CONSTRAINT u_books UNIQUE(archive_id, name) ON CONFLICT IGNORE
 );
 
 CREATE TABLE authors (
@@ -79,6 +80,34 @@ CREATE TABLE genre_synonyms (
   code        TEXT NOT NULL UNIQUE,
   synonym_id  INTEGER NOT NULL REFERENCES genre_names(id)
 );
+
+CREATE VIEW genres_view AS 
+SELECT 
+	G.id AS `id`, 
+	G.name AS `code`,
+	ifnull(ifnull(N.name, GN.name), G.name) AS `name`,
+	ifnull(GG.name, '') AS `group`
+FROM genres G 
+LEFT JOIN genre_names N ON (G.name = N.code)
+LEFT JOIN genre_synonyms S ON (S.code = G.name) LEFT JOIN genre_names GN ON (S.synonym_id = GN.id)
+LEFT JOIN genre_groups GG ON (GG.id = N.group_id OR GG.id = GN.group_id);
+
+CREATE VIEW titles_view AS 
+SELECT 
+	B.id  AS id,
+	T.book_title AS title
+FROM books B JOIN title_links L ON (B.id = L.book_id) JOIN titles T ON (L.title_id = T.id);
+
+CREATE VIEW authors_view AS 
+SELECT 
+	A.id AS id,
+	L.book_id AS book_id,
+	A.first_name AS first_name,
+	A.middle_name AS middle_name,
+	A.last_name AS last_name,
+	A.nickname AS nickname,
+	A.uuid AS uuid
+FROM authors A JOIN author_links L ON (A.id = L.author_id);
 
 INSERT INTO genre_groups (id, name) VALUES (0,  'не классифицировано');
 INSERT INTO genre_groups (id, name) VALUES (1,  'приключения');
@@ -149,6 +178,8 @@ INSERT INTO genre_names (group_id, code, name) VALUES (6, 'dramaturgy', 'дра�
 INSERT INTO genre_names (group_id, code, name) VALUES (6, 'comedy', 'комедия');
 INSERT INTO genre_names (group_id, code, name) VALUES (6, 'poetry', 'поэзия');
 INSERT INTO genre_names (group_id, code, name) VALUES (6, 'lyrics', 'лирика');
+INSERT INTO genre_names (group_id, code, name) VALUES (6, 'epic_poetry', 'эпическая поэзия');
+
 
 INSERT INTO genre_names (group_id, code, name) VALUES (7, 'home_cooking', 'кулинария');
 INSERT INTO genre_names (group_id, code, name) VALUES (7, 'home_crafts', 'хобби и ремесла');
@@ -256,6 +287,7 @@ INSERT INTO genre_names (group_id, code, name) VALUES (14, 'sci_religion', 'ре
 INSERT INTO genre_names (group_id, code, name) VALUES (14, 'sci_sociology', 'социология');
 INSERT INTO genre_names (group_id, code, name) VALUES (14, 'sci_tech', 'технические науки');
 INSERT INTO genre_names (group_id, code, name) VALUES (14, 'sci_transport', 'транспортные науки');
+INSERT INTO genre_names (group_id, code, name) VALUES (14, 'architecture', 'архитектура');
 INSERT INTO genre_names (group_id, code, name) VALUES (14, 'science', 'прочая научная литература');
 
 INSERT INTO genre_names (group_id, code, name) VALUES (15, 'humor', 'прочий юмор');
@@ -264,6 +296,9 @@ INSERT INTO genre_names (group_id, code, name) VALUES (15, 'humor_fantasy', 'ю�
 INSERT INTO genre_names (group_id, code, name) VALUES (15, 'sf_humor', 'юмористическая фантастика');
 INSERT INTO genre_names (group_id, code, name) VALUES (15, 'humor_prose', 'юмористическая проза');
 INSERT INTO genre_names (group_id, code, name) VALUES (15, 'humor_verse', 'юмористические стихи');
+INSERT INTO genre_names (group_id, code, name) VALUES (15, 'foreign_humor', 'юмор в зарубежной литературе');
+INSERT INTO genre_names (group_id, code, name) VALUES (15, 'humor_satire', 'юмор и сатира');
+
 
 INSERT INTO genre_names (group_id, code, name) VALUES (0, 'foreign_adventure', 'foreign_adventure');
 INSERT INTO genre_names (group_id, code, name) VALUES (0, 'foreign_antique', 'foreign_antique');
@@ -340,5 +375,15 @@ INSERT INTO genre_synonyms (code, synonym_id) SELECT 'sf_cyber_punk', id FROM ge
 INSERT INTO genre_synonyms (code, synonym_id) SELECT 'city_fantasy', id FROM genre_names WHERE code = 'sf_fantasy_city';
 INSERT INTO genre_synonyms (code, synonym_id) SELECT 'religion_rel', id FROM genre_names WHERE code = 'religion';
 INSERT INTO genre_synonyms (code, synonym_id) SELECT 'попаданцы', id FROM genre_names WHERE code = 'popadanec';
+INSERT INTO genre_synonyms (code, synonym_id) SELECT 'Фэнтези', id FROM genre_names WHERE code = 'sf_fantasy';
+INSERT INTO genre_synonyms (code, synonym_id) SELECT '', id FROM genre_names WHERE code = 'unknown';
+INSERT INTO genre_synonyms (code, synonym_id) SELECT 'unrecognised', id FROM genre_names WHERE code = 'unknown';
+INSERT INTO genre_synonyms (code, synonym_id) SELECT 'Приключенческое фэнтези', id FROM genre_names WHERE code = 'sf_fantasy';
+INSERT INTO genre_synonyms (code, synonym_id) SELECT 'theatre', id FROM genre_names WHERE code = 'cinema_theatre';
+INSERT INTO genre_synonyms (code, synonym_id) SELECT 'geography_book', id FROM genre_names WHERE code = 'adv_geo';
+INSERT INTO genre_synonyms (code, synonym_id) SELECT 'prose_magic', id FROM genre_names WHERE code = 'sf_fantasy';
+INSERT INTO genre_synonyms (code, synonym_id) SELECT 'ЛитРПГ', id FROM genre_names WHERE code = 'sf_litrpg';
+INSERT INTO genre_synonyms (code, synonym_id) SELECT 'sf_writing', id FROM genre_names WHERE code = 'sf';
+
 
 

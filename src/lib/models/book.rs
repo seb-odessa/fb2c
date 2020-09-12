@@ -26,7 +26,7 @@ impl Book {
     }
 }
 
-#[derive(Insertable, Queryable)]
+#[derive(Insertable, Queryable, Debug, Clone)]
 #[table_name="books"]
 pub struct BookRecord {
     pub id: Id,
@@ -56,11 +56,6 @@ impl Find<Base> for Record {
         books
             .filter(archive_id.eq(&value.archive_id))
             .filter(name.eq(&value.name))
-            .filter(compressed_size.eq(&value.compressed_size))
-            .filter(size.eq(&value.size))
-            .filter(size.eq(&value.size))
-            .filter(crc32.eq(&value.crc32))
-            .filter(offset.eq(&value.offset))
             .select(id)
             .first(conn)
     }
@@ -69,5 +64,24 @@ impl Save<Base> for Record {
     fn save(conn: &SqliteConnection, value: &Base) -> QueryResult<usize> {
         use crate::diesel::RunQueryDsl;       
         diesel::insert_into(books::table).values(value).execute(conn)
+    }
+}
+
+#[derive(Clone, Debug)]
+pub struct BookDescription{
+    pub book: BookRecord,
+    pub archive: ArchiveRecord,
+    pub title: TitleView,
+    pub authors: Vec<AuthorRecord>,
+    
+}
+impl Load<BookDescription> for BookDescription {
+    fn load(conn: &SqliteConnection, id: Id) -> QueryResult<Self> {
+        let book = BookRecord::load(conn, id) ?;
+        let archive = ArchiveRecord::load(conn, book.archive_id) ?;
+        let title = TitleView::load(conn, id) ?;
+        let authors = AuthorRecord::load_for_book(conn, id) ?;
+        
+        Ok(Self { book, archive, title, authors})
     }
 }

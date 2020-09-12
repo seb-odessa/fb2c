@@ -35,7 +35,7 @@ impl From<&fb2parser::Translator> for Author{
     }
 }
 
-#[derive(Insertable, Queryable)]
+#[derive(Insertable, Queryable, Debug, Clone)]
 #[table_name="authors"]
 pub struct AuthorRecord {
     pub id: Id,
@@ -56,6 +56,20 @@ impl Load<Record> for Record {
         authors.find(id).first(conn)
     }
 }
+impl ForBook<Record> for Record {
+    fn load_for_book(conn: &SqliteConnection, book: Id) -> QueryResult<Vec<Self>>
+    {
+        use crate::schema_views::authors_view::dsl::*;
+        use crate::diesel::RunQueryDsl;
+        use crate::diesel::QueryDsl;
+        use crate::diesel::ExpressionMethods;
+        authors_view
+            .filter(book_id.eq(&book))
+            .select((id, first_name, middle_name, last_name, nickname, uuid))
+            .load(conn)
+    }
+}
+
 impl Find<Base> for Record {
     fn find(conn: &SqliteConnection, value: &Base) -> QueryResult<Id> {
         use crate::schema::authors::dsl::*;

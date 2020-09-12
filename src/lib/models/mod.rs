@@ -15,16 +15,20 @@ pub trait Save<T> {
     fn save(conn: &SqliteConnection, value: &T) -> QueryResult<usize>;
 }
 
+pub trait ForBook<T> {
+    fn load_for_book(conn: &SqliteConnection, book: Id) -> QueryResult<Vec<T>>;
+}
+
 pub mod archive;
 pub use archive::{Archive, ArchiveRecord};
 pub mod book;
 pub use book::{Book, BookRecord};
 pub mod genre;
-pub use genre::{Genre, GenreRecord};
+pub use genre::{Genre, GenreRecord, GenreView};
 pub mod author;
 pub use author::{Author, AuthorRecord};
 pub mod title;
-pub use title::{Title, TitleRecord};
+pub use title::{Title, TitleRecord, TitleView};
 
 pub mod title_links;
 pub use title_links::*;

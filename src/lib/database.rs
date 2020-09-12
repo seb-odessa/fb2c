@@ -41,9 +41,12 @@ pub struct Storage<T: Clone+Eq+Hash+Debug> {
 }
 impl <T: Clone+Eq+Hash+Debug> Drop for Storage<T> {
     fn drop(&mut self) {
-        println!("Storage<{}>", std::any::type_name::<T>());                
-        println!("   quered/inserted/total: {}/{}/{}", self.quered, self.added, self.count);
-        println!("   cache hits/size: {}/{}", self.hits, self.map.len());
+        let inner_type = std::any::type_name::<T>().rsplit(':').take(1).next();
+        println!("Storage<{:>12}> hits/size: {:>5}/{:>6}, quered/inserted/total: {:>6}/{:>6}/{:>6}", 
+            inner_type.unwrap(),
+            self.hits, self.map.len(),
+            self.quered, self.added, self.count
+        );
     }
 }
 impl <T: Clone+Eq+Hash+Debug> Storage<T> {
