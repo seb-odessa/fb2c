@@ -123,6 +123,10 @@ fn convert_utf8(header: Vec<u8>) -> Option<String> {
     Some(String::from_utf8_lossy(&header).to_string())
 }
 
+fn escape_non_xml_chars(xml: String) -> String {
+    xml.replace("&","&amp;").replace("'","&apos;")
+}
+
 fn load_header<F: Read>(file: &mut F) -> Option<String> {    
     let mut buffer = [0u8; CHUNK];
 
@@ -158,7 +162,8 @@ fn load_header<F: Read>(file: &mut F) -> Option<String> {
             header.resize(lookup_window_pos + pos, 0u8); 
             header.extend_from_slice(CLOSE_DS_TAG);
             header.extend_from_slice(CLOSE_FB_TAG);
-            return convert_utf8(header);
+            return convert_utf8(header)
+                   .and_then(|s| Some(escape_non_xml_chars(s)))
         }
     }
     return None;
