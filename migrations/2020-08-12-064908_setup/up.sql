@@ -1,22 +1,22 @@
 
 CREATE TABLE archives (
-  id    INTEGER NOT NULL PRIMARY KEY,
-  name  TEXT NOT NULL,
-  path  TEXT NOT NULL,
-  size  BIGINT NOT NULL,
-  md5   TEXT NOT NULL UNIQUE ON CONFLICT IGNORE,
-  done  BOOLEAN NOT NULL DEFAULT 0
+  id         INTEGER NOT NULL PRIMARY KEY,
+  arch_name  TEXT NOT NULL,
+  arch_home  TEXT NOT NULL,
+  arch_size  BIGINT NOT NULL,
+  arch_uuid  TEXT NOT NULL UNIQUE ON CONFLICT IGNORE,
+  arch_done  BOOLEAN NOT NULL DEFAULT 0
 );
 
 CREATE TABLE books (
   id              INTEGER NOT NULL PRIMARY KEY,
   archive_id      INTEGER NOT NULL REFERENCES archives(id),
-  name            TEXT NOT NULL,
+  book_file       TEXT NOT NULL,
   compressed_size BIGINT NOT NULL,
   size            BIGINT NOT NULL,
   crc32           BIGINT NOT NULL,
   offset          BIGINT NOT NULL,
-  CONSTRAINT u_books UNIQUE(archive_id, name) ON CONFLICT IGNORE
+  CONSTRAINT u_books UNIQUE(archive_id, book_file, crc32) ON CONFLICT IGNORE
 );
 
 CREATE TABLE authors (
@@ -28,6 +28,18 @@ CREATE TABLE authors (
   uuid        TEXT NOT NULL,
   CONSTRAINT u_authors UNIQUE(first_name, middle_name, last_name, nickname, uuid) ON CONFLICT IGNORE
 );
+
+/*
+CREATE VIRTUAL TABLE fts_authors USING fts5(
+  id INTEGER NOT NULL PRIMARY KEY,
+  first_name,
+  middle_name,
+  last_name,
+  nickname UNINDEXED,
+  uuid UNINDEXED
+);
+--INSERT INTO fts_authors SELECT * FROM authors;
+*/
 
 CREATE TABLE titles (
   id          INTEGER NOT NULL PRIMARY KEY,
@@ -98,6 +110,7 @@ SELECT
 	T.book_title AS title
 FROM books B JOIN title_links L ON (B.id = L.book_id) JOIN titles T ON (L.title_id = T.id);
 
+
 CREATE VIEW authors_view AS 
 SELECT 
 	A.id AS id,
@@ -108,6 +121,31 @@ SELECT
 	A.nickname AS nickname,
 	A.uuid AS uuid
 FROM authors A JOIN author_links L ON (A.id = L.author_id);
+
+/*
+CREATE VIEW full_view AS 
+SELECT 
+	Z.id,
+    Z.name,
+	B.id,
+	B.name,
+	T.id,
+	T.book_title,
+	A.id,
+	A.first_name,
+	A.middle_name,
+	A.last_name,
+	GV.id,
+	GV.name
+FROM author_links AL 
+LEFT JOIN title_links TL ON (AL.book_id = TL.book_id)
+LEFT JOIN genre_links GL ON (GL.book_id = TL.book_id)
+LEFT JOIN books B ON (AL.book_id = B.id)
+LEFT JOIN authors A ON (AL.author_id = A.id)
+LEFT JOIN titles T ON (TL.title_id = T.id)
+LEFT JOIN archives Z ON (B.archive_id = Z.id)
+LEFT JOIN genres_view GV ON (GL.genre_id = GV.id)
+/*
 
 INSERT INTO genre_groups (id, name) VALUES (0,  'не классифицировано');
 INSERT INTO genre_groups (id, name) VALUES (1,  'приключения');

@@ -1,11 +1,11 @@
 table! {
     archives (id) {
         id -> Integer,
-        arch_name -> Text,
-        arch_home -> Text,
-        arch_size -> BigInt,
-        arch_uuid -> Text,
-        arch_done -> Bool,
+        name -> Text,
+        path -> Text,
+        size -> BigInt,
+        uuid -> Text,
+        done -> Bool,
     }
 }
 
@@ -32,7 +32,7 @@ table! {
     books (id) {
         id -> Integer,
         archive_id -> Integer,
-        book_file -> Text,
+        name -> Text,
         compressed_size -> BigInt,
         size -> BigInt,
         crc32 -> BigInt,

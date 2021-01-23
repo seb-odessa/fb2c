@@ -7,7 +7,7 @@ use super::*;
 #[derive(Eq, PartialEq, Hash, Clone, Debug)]
 pub struct Book{
     pub archive_id: Id,
-    pub name: String,
+    pub book_file: String,
     pub compressed_size: i64,
     pub size: i64,
     pub crc32: i64,
@@ -17,7 +17,7 @@ impl Book {
     pub fn new(archive_id: Id, book: &ZipFile) -> Self {
         Self {
             archive_id: archive_id,
-            name: String::from(book.name()),
+            book_file: String::from(book.name()),
             compressed_size: book.compressed_size() as i64,
             size: book.size() as i64,
             crc32: book.crc32() as i64,
@@ -31,11 +31,25 @@ impl Book {
 pub struct BookRecord {
     pub id: Id,
     pub archive_id: Id,
-    pub name: String,
+    pub book_file: String,
     pub compressed_size: i64,
     pub size: i64,
     pub crc32: i64,
     pub offset: i64,
+}
+impl BookRecord {
+    pub fn find_uniq(conn: &SqliteConnection, aid: Id, book: &str, crc: i64) -> Option<Id> {
+        pub use crate::schema::books::dsl::*;
+        use crate::diesel::ExpressionMethods;
+        use crate::diesel::RunQueryDsl;
+        use crate::diesel::QueryDsl;
+        books
+            .filter(archive_id.eq(&aid))
+            .filter(book_file.eq(book))
+            .filter(crc32.eq(&crc))
+            .select(id)
+            .first(conn).ok()
+    }
 }
 type Base = Book;
 type Record = BookRecord;
@@ -55,7 +69,11 @@ impl Find<Base> for Record {
         use crate::diesel::QueryDsl;
         books
             .filter(archive_id.eq(&value.archive_id))
-            .filter(name.eq(&value.name))
+            .filter(book_file.eq(&value.book_file))
+            .filter(compressed_size.eq(&value.compressed_size))
+            .filter(size.eq(&value.size))
+            .filter(crc32.eq(&value.crc32))
+            .filter(offset.eq(&value.offset))
             .select(id)
             .first(conn)
     }

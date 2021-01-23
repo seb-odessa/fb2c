@@ -1,5 +1,4 @@
 use std::path::Path;
-use crate::md5;
 use crate::schema::archives;
 use super::*;
 
@@ -7,23 +6,23 @@ use super::*;
 #[table_name="archives"]
 #[derive(Eq, PartialEq, Hash, Clone, Debug)]
 pub struct Archive {
-    pub name: String,
-    pub path: String,
-    pub size: i64,
-    pub md5: String,
+    pub arch_name: String,
+    pub arch_home: String,
+    pub arch_size: i64,
+    pub arch_uuid: String,
 }
 impl Archive {
-    pub fn new(archive: &Path) -> Self {
+    pub fn new(archive: &Path, uuid: String) -> Self {
         use std::fs;
         Self {
-            name: archive.file_name()
-                    .expect(&format!("Failed to get file name of '{}'", archive.to_string_lossy()))
-                    .to_string_lossy().to_string(),
-                path: archive.canonicalize()
-                    .expect(&format!("Failed to build absolute path of the '{}'", archive.to_string_lossy()))
-                    .to_string_lossy().to_string(),
-                size: fs::metadata(archive).map(|meta| meta.len()).unwrap_or_default() as i64,
-                md5: calc_md5(archive),
+            arch_name: archive.file_name()
+                .expect(&format!("Failed to get file name of '{}'", archive.to_string_lossy()))
+                .to_string_lossy().to_string(),
+            arch_home: archive.canonicalize()
+                .expect(&format!("Failed to build absolute path of the '{}'", archive.to_string_lossy()))
+                .to_string_lossy().to_string(),
+            arch_size: fs::metadata(archive).map(|meta| meta.len()).unwrap_or_default() as i64,
+            arch_uuid: uuid,
         }
     }
 }
@@ -32,11 +31,20 @@ impl Archive {
 #[table_name="archives"]
 pub struct ArchiveRecord {
     pub id: Id,
-    pub name: String,
-    pub path: String,
-    pub size: i64,
-    pub md5: String,
-    pub done: bool,
+    pub arch_name: String,
+    pub arch_home: String,
+    pub arch_size: i64,
+    pub arch_uuid: String,
+    pub arch_done: bool,
+}
+impl Record {
+    pub fn find_uniq(conn: &SqliteConnection, uid: &String) -> Option<Id> {
+        use crate::schema::archives::dsl::*;
+        use crate::diesel::ExpressionMethods;
+        use crate::diesel::RunQueryDsl;
+        use crate::diesel::QueryDsl;
+        archives.filter(arch_uuid.eq(uid)).select(id).first(conn).ok()
+    }
 }
 
 type Base = Archive;
@@ -56,10 +64,10 @@ impl Find<Base> for Record {
         use crate::diesel::RunQueryDsl;
         use crate::diesel::QueryDsl;
         archives
-            .filter(name.eq(&value.name))
-            .filter(path.eq(&value.path))
-            .filter(size.eq(&value.size))
-            .filter(md5.eq(&value.md5))
+            .filter(arch_name.eq(&value.arch_name))
+            .filter(arch_home.eq(&value.arch_home))
+            .filter(arch_size.eq(&value.arch_size))
+            .filter(arch_uuid.eq(&value.arch_uuid))
             .select(id)
             .first(conn)
     }
@@ -69,22 +77,4 @@ impl Save<Base> for Record {
         use crate::diesel::RunQueryDsl;       
         diesel::insert_into(archives::table).values(value).execute(conn)
     }
-}
-
-
-fn calc_md5(archive: &Path) -> String {
-    use std::io::prelude::*;
-    use std::fs::File;
-
-    let mut ctx = md5::Context::new();
-    let mut file = File::open(archive).expect(&format!("Can't open file '{}'", archive.to_string_lossy()));
-    let mut buffer = [0; 1024*1024];
-    while let Some(readed) = file.read(&mut buffer).ok() {
-        if readed > 0 {
-            ctx.write(&buffer[0..readed]).expect("Failed to calculate md5");
-        } else {
-            break;
-        }
-    }
-    format!("{:X}", ctx.compute())
 }
