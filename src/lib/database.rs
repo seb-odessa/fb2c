@@ -23,7 +23,8 @@ fn establish_connection() -> SqliteConnection {
     let queries = vec![
         "PRAGMA cache_size = -262144;   /* 256 * 1024 Kb = 256 Mb */",
         "PRAGMA journal_mode = MEMORY;  /* Fast but unsave journal */ ",
-        "PRAGMA synchronous = OFF ",
+        "PRAGMA temp_store = MEMORY; ",
+        "PRAGMA synchronous = OFF; "
     ];    
     for query in &queries {
         conn.batch_execute(query).expect(&format!("Can't execute: {}", query));

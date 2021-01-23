@@ -14,7 +14,6 @@ use lib::models::Archive;
 
 const CHUNK: usize = 128;
 
-
 fn main() {
     let selfname: String = std::env::args().nth(0).unwrap_or_default();
 
