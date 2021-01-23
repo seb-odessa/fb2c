@@ -18,13 +18,14 @@ fn main() {
     let selfname: String = std::env::args().nth(0).unwrap_or_default();
 
     let app = App::new(selfname)
-        .version("0.1.0")
+        .version("1.0.0")
         .author("seb <seb@ukr.net>")
-        .about("FictionBook Library Archive Manager")
+        .about("FictionBook Library Database creator")
         .arg(Arg::with_name("ARCHIVE.ZIP")
             .help("Sets the input file to use")
             .required(true)
-            .index(1))
+            .index(1)
+        )
         .setting(AppSettings::ArgRequiredElseHelp);
 
     let matches = app.get_matches();
