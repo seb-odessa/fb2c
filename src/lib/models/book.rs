@@ -6,22 +6,22 @@ use super::*;
 #[table_name="books"]
 #[derive(Eq, PartialEq, Hash, Clone, Debug)]
 pub struct Book{
-    pub archive_id: Id,
+    pub arch_id: Id,
     pub book_file: String,
-    pub compressed_size: i64,
-    pub size: i64,
-    pub crc32: i64,
-    pub offset: i64,
+    pub book_zip_size: i64,
+    pub book_size: i64,
+    pub book_crc32: i64,
+    pub book_offset: i64,
 }
 impl Book {
     pub fn new(archive_id: Id, book: &ZipFile) -> Self {
         Self {
-            archive_id: archive_id,
+            arch_id: archive_id,
             book_file: String::from(book.name()),
-            compressed_size: book.compressed_size() as i64,
-            size: book.size() as i64,
-            crc32: book.crc32() as i64,
-            offset: book.data_start() as i64,
+            book_zip_size: book.compressed_size() as i64,
+            book_size: book.size() as i64,
+            book_crc32: book.crc32() as i64,
+            book_offset: book.data_start() as i64,
         }
     }
 }
@@ -30,12 +30,12 @@ impl Book {
 #[table_name="books"]
 pub struct BookRecord {
     pub id: Id,
-    pub archive_id: Id,
+    pub arch_id: Id,
     pub book_file: String,
-    pub compressed_size: i64,
-    pub size: i64,
-    pub crc32: i64,
-    pub offset: i64,
+    pub book_zip_size: i64,
+    pub book_size: i64,
+    pub book_crc32: i64,
+    pub book_offset: i64,
 }
 impl BookRecord {
     pub fn find_uniq(conn: &SqliteConnection, aid: Id, book: &str, crc: i64) -> Option<Id> {
@@ -44,9 +44,9 @@ impl BookRecord {
         use crate::diesel::RunQueryDsl;
         use crate::diesel::QueryDsl;
         books
-            .filter(archive_id.eq(&aid))
+            .filter(arch_id.eq(&aid))
             .filter(book_file.eq(book))
-            .filter(crc32.eq(&crc))
+            .filter(book_crc32.eq(&crc))
             .select(id)
             .first(conn).ok()
     }
@@ -68,12 +68,12 @@ impl Find<Base> for Record {
         use crate::diesel::RunQueryDsl;
         use crate::diesel::QueryDsl;
         books
-            .filter(archive_id.eq(&value.archive_id))
+            .filter(arch_id.eq(&value.arch_id))
             .filter(book_file.eq(&value.book_file))
-            .filter(compressed_size.eq(&value.compressed_size))
-            .filter(size.eq(&value.size))
-            .filter(crc32.eq(&value.crc32))
-            .filter(offset.eq(&value.offset))
+            .filter(book_zip_size.eq(&value.book_zip_size))
+            .filter(book_size.eq(&value.book_size))
+            .filter(book_crc32.eq(&value.book_crc32))
+            .filter(book_offset.eq(&value.book_offset))
             .select(id)
             .first(conn)
     }
@@ -96,7 +96,7 @@ pub struct BookDescription{
 impl Load<BookDescription> for BookDescription {
     fn load(conn: &SqliteConnection, id: Id) -> QueryResult<Self> {
         let book = BookRecord::load(conn, id) ?;
-        let archive = ArchiveRecord::load(conn, book.archive_id) ?;
+        let archive = ArchiveRecord::load(conn, book.arch_id) ?;
         let title = TitleView::load(conn, id) ?;
         let authors = AuthorRecord::load_for_book(conn, id) ?;
         

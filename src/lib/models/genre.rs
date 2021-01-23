@@ -6,12 +6,12 @@ use super::*;
 #[table_name="genres"]
 #[derive(Eq, PartialEq, Hash, Clone, Debug)]
 pub struct Genre{
-    pub name: String
+    pub genre_name: String
 }
 impl From<&fb2parser::Genre> for Genre {
     fn from(src: &fb2parser::Genre) -> Self {
         Self {
-            name: src.text.clone(),
+            genre_name: src.text.clone(),
         }
     }
 }
@@ -20,7 +20,7 @@ impl From<&fb2parser::Genre> for Genre {
 #[table_name="genres"]
 pub struct GenreRecord {
     pub id: Id,
-    pub name: String,
+    pub genre_name: String,
 }
 type Base = Genre;
 type Record = GenreRecord;
@@ -38,7 +38,7 @@ impl Find<Base> for Record {
         use crate::diesel::ExpressionMethods;
         use crate::diesel::RunQueryDsl;
         use crate::diesel::QueryDsl;
-        genres.filter(name.eq(&value.name)).select(id).first(conn)
+        genres.filter(genre_name.eq(&value.genre_name)).select(id).first(conn)
     }
 }
 impl Save<Base> for Record {

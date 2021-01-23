@@ -31,12 +31,12 @@ table! {
 table! {
     books (id) {
         id -> Integer,
-        archive_id -> Integer,
+        arch_id -> Integer,
         book_file -> Text,
-        compressed_size -> BigInt,
-        size -> BigInt,
-        crc32 -> BigInt,
-        offset -> BigInt,
+        book_zip_size -> BigInt,
+        book_size -> BigInt,
+        book_crc32 -> BigInt,
+        book_offset -> BigInt,
     }
 }
 
@@ -75,7 +75,7 @@ table! {
 table! {
     genres (id) {
         id -> Integer,
-        name -> Text,
+        genre_name -> Text,
     }
 }
 
@@ -96,7 +96,7 @@ table! {
 
 joinable!(author_links -> authors (author_id));
 joinable!(author_links -> books (book_id));
-joinable!(books -> archives (archive_id));
+joinable!(books -> archives (arch_id));
 joinable!(genre_links -> books (book_id));
 joinable!(genre_links -> genres (genre_id));
 joinable!(genre_names -> genre_groups (group_id));

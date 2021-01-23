@@ -1,4 +1,5 @@
 
+/****************************************************************************************************/
 CREATE TABLE archives (
   id         INTEGER NOT NULL PRIMARY KEY,
   arch_name  TEXT NOT NULL,
@@ -7,18 +8,32 @@ CREATE TABLE archives (
   arch_uuid  TEXT NOT NULL UNIQUE ON CONFLICT IGNORE,
   arch_done  BOOLEAN NOT NULL DEFAULT 0
 );
-
 CREATE TABLE books (
   id              INTEGER NOT NULL PRIMARY KEY,
-  archive_id      INTEGER NOT NULL REFERENCES archives(id),
+  arch_id         INTEGER NOT NULL REFERENCES archives(id),
   book_file       TEXT NOT NULL,
-  compressed_size BIGINT NOT NULL,
-  size            BIGINT NOT NULL,
-  crc32           BIGINT NOT NULL,
-  offset          BIGINT NOT NULL,
-  CONSTRAINT u_books UNIQUE(archive_id, book_file, crc32) ON CONFLICT IGNORE
+  book_zip_size   BIGINT NOT NULL,
+  book_size       BIGINT NOT NULL,
+  book_crc32      BIGINT NOT NULL,
+  book_offset     BIGINT NOT NULL,
+  CONSTRAINT u_books UNIQUE(arch_id, book_file, book_crc32) ON CONFLICT IGNORE
 );
+CREATE VIEW books_view AS 
+SELECT
+	arch_id,
+	arch_name,
+	arch_home,
+	arch_size,
+	arch_uuid,
+  books.id as book_id,
+	book_file,
+	book_zip_size,
+	book_size,
+	book_crc32,
+	book_offset
+FROM books LEFT JOIN archives ON (arch_id = archives.id);
 
+/****************************************************************************************************/
 CREATE TABLE authors (
   id          INTEGER NOT NULL PRIMARY KEY,
   first_name  TEXT NOT NULL,
@@ -28,6 +43,22 @@ CREATE TABLE authors (
   uuid        TEXT NOT NULL,
   CONSTRAINT u_authors UNIQUE(first_name, middle_name, last_name, nickname, uuid) ON CONFLICT IGNORE
 );
+CREATE TABLE  author_links (
+  id          INTEGER NOT NULL PRIMARY KEY,
+  book_id     INTEGER NOT NULL REFERENCES books(id),
+  author_id   INTEGER NOT NULL REFERENCES authors(id),
+  CONSTRAINT u_authors UNIQUE(book_id, author_id) ON CONFLICT IGNORE
+);
+CREATE VIEW authors_view AS 
+SELECT 
+	book_id,
+	first_name,
+	middle_name,
+	last_name,
+	nickname,
+	uuid
+FROM author_links LEFT JOIN authors ON (author_id = authors.id);
+/****************************************************************************************************/
 
 /*
 CREATE VIRTUAL TABLE fts_authors USING fts5(
@@ -41,38 +72,39 @@ CREATE VIRTUAL TABLE fts_authors USING fts5(
 --INSERT INTO fts_authors SELECT * FROM authors;
 */
 
+/****************************************************************************************************/
 CREATE TABLE titles (
   id          INTEGER NOT NULL PRIMARY KEY,
   book_title  TEXT NOT NULL
 );
-
-CREATE TABLE genres (
-  id      INTEGER NOT NULL PRIMARY KEY,
-  name    TEXT NOT NULL
-);
-
-/****************************************************************************************************/
-
 CREATE TABLE  title_links (
   id          INTEGER NOT NULL PRIMARY KEY,
   book_id     INTEGER NOT NULL REFERENCES books(id),
   title_id    INTEGER NOT NULL REFERENCES titles(id),
   CONSTRAINT u_authors UNIQUE(book_id, title_id) ON CONFLICT IGNORE
 );
-
-CREATE TABLE  author_links (
-  id          INTEGER NOT NULL PRIMARY KEY,
-  book_id     INTEGER NOT NULL REFERENCES books(id),
-  author_id   INTEGER NOT NULL REFERENCES authors(id),
-  CONSTRAINT u_authors UNIQUE(book_id, author_id) ON CONFLICT IGNORE
+CREATE VIEW titles_view AS 
+SELECT 
+	book_id,
+	book_title
+FROM title_links LEFT JOIN titles ON (titles.id = book_id);
+/****************************************************************************************************/
+CREATE TABLE genres (
+  id      INTEGER NOT NULL PRIMARY KEY,
+  genre_name    TEXT NOT NULL
 );
-
 CREATE TABLE  genre_links (
   id          INTEGER NOT NULL PRIMARY KEY,
   book_id     INTEGER NOT NULL REFERENCES books(id),
   genre_id   INTEGER NOT NULL REFERENCES genres(id),
   CONSTRAINT u_authors UNIQUE(book_id, genre_id) ON CONFLICT IGNORE
 );
+CREATE VIEW genres_view AS 
+SELECT 
+	book_id,
+	genre_name
+FROM genre_links LEFT JOIN genres ON (genres.id = genre_id);
+/****************************************************************************************************/
 
 /****************************************************************************************************/
 CREATE TABLE genre_groups (
@@ -93,7 +125,7 @@ CREATE TABLE genre_synonyms (
   synonym_id  INTEGER NOT NULL REFERENCES genre_names(id)
 );
 
-CREATE VIEW genres_view AS 
+CREATE VIEW genre_dict_view AS 
 SELECT 
 	G.id AS `id`, 
 	G.name AS `code`,
@@ -104,48 +136,30 @@ LEFT JOIN genre_names N ON (G.name = N.code)
 LEFT JOIN genre_synonyms S ON (S.code = G.name) LEFT JOIN genre_names GN ON (S.synonym_id = GN.id)
 LEFT JOIN genre_groups GG ON (GG.id = N.group_id OR GG.id = GN.group_id);
 
-CREATE VIEW titles_view AS 
-SELECT 
-	B.id  AS id,
-	T.book_title AS title
-FROM books B JOIN title_links L ON (B.id = L.book_id) JOIN titles T ON (L.title_id = T.id);
 
-
-CREATE VIEW authors_view AS 
-SELECT 
-	A.id AS id,
-	L.book_id AS book_id,
-	A.first_name AS first_name,
-	A.middle_name AS middle_name,
-	A.last_name AS last_name,
-	A.nickname AS nickname,
-	A.uuid AS uuid
-FROM authors A JOIN author_links L ON (A.id = L.author_id);
-
-/*
 CREATE VIEW full_view AS 
 SELECT 
-	Z.id,
-    Z.name,
-	B.id,
-	B.name,
-	T.id,
-	T.book_title,
-	A.id,
-	A.first_name,
-	A.middle_name,
-	A.last_name,
-	GV.id,
-	GV.name
-FROM author_links AL 
-LEFT JOIN title_links TL ON (AL.book_id = TL.book_id)
-LEFT JOIN genre_links GL ON (GL.book_id = TL.book_id)
-LEFT JOIN books B ON (AL.book_id = B.id)
-LEFT JOIN authors A ON (AL.author_id = A.id)
-LEFT JOIN titles T ON (TL.title_id = T.id)
-LEFT JOIN archives Z ON (B.archive_id = Z.id)
-LEFT JOIN genres_view GV ON (GL.genre_id = GV.id)
-/*
+	arch_id,
+	arch_name,
+	arch_home,
+	arch_size,
+	arch_uuid,
+	books_view.book_id,
+	book_file,
+	book_zip_size,
+	book_size,
+	book_crc32,
+	book_offset,
+	book_title,
+	first_name,
+	middle_name,
+	last_name,
+	genre_name
+FROM books_view
+LEFT JOIN titles_view  ON books_view.book_id = titles_view.book_id
+LEFT JOIN authors_view ON books_view.book_id = authors_view.book_id
+LEFT JOIN genres_view  ON books_view.book_id = genres_view.book_id;
+
 
 INSERT INTO genre_groups (id, name) VALUES (0,  'не классифицировано');
 INSERT INTO genre_groups (id, name) VALUES (1,  'приключения');

@@ -18,7 +18,7 @@ impl Archive {
             arch_name: archive.file_name()
                 .expect(&format!("Failed to get file name of '{}'", archive.to_string_lossy()))
                 .to_string_lossy().to_string(),
-            arch_home: archive.canonicalize()
+            arch_home: archive.parent().unwrap_or(Path::new(".")).canonicalize()
                 .expect(&format!("Failed to build absolute path of the '{}'", archive.to_string_lossy()))
                 .to_string_lossy().to_string(),
             arch_size: fs::metadata(archive).map(|meta| meta.len()).unwrap_or_default() as i64,
