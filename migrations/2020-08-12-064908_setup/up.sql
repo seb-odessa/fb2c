@@ -439,6 +439,43 @@ INSERT INTO genre_synonyms (code, synonym_id) SELECT 'sf_writing', id FROM genre
 INSERT INTO genre_synonyms (code, synonym_id) SELECT 'literature_19', id FROM genre_names WHERE code = 'prose';
 INSERT INTO genre_synonyms (code, synonym_id) SELECT 'literature_20', id FROM genre_names WHERE code = 'prose';
 
+/*
+SELECT
+	count(gv.book_id) CNT,
+	gv.genre_name AS orig
+
+FROM genres_view gv
+LEFT JOIN genre_synonyms gs ON (gs.code = gv.genre_name)
+LEFT JOIN genre_names n1 ON (n1.code = gv.genre_name)
+LEFT JOIN genre_groups g1  ON (g1.id = n1.group_id)
+LEFT JOIN genre_names n2 ON (n2.id = gs.synonym_id)
+LEFT JOIN genre_groups g2  ON (g2.id = n2.group_id)
+
+WHERE orig IS NOT NULL AND orig != '' AND ifnull(g1.name, g2.name) IS NULL
+
+GROUP BY orig
+ORDER BY 1 DESC
+
+*/
+
+/*
+SELECT
+	gv.book_id,
+	ifnull(g1.name, g2.name) AS genre_group,
+	ifnull(n1.name, n2.name) AS genre_name,
+	gv.genre_name AS orig
+
+FROM genres_view gv
+LEFT JOIN genre_synonyms gs ON (gs.code = gv.genre_name)
+LEFT JOIN genre_names n1 ON (n1.code = gv.genre_name)
+LEFT JOIN genre_groups g1  ON (g1.id = n1.group_id)
+LEFT JOIN genre_names n2 ON (n2.id = gs.synonym_id)
+LEFT JOIN genre_groups g2  ON (g2.id = n2.group_id)
+
+WHERE orig IS NOT NULL AND orig != '' AND ifnull(g1.name, g2.name) IS NULL
+ORDER BY 4
+
+*/
 
 
 
