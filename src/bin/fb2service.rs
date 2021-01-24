@@ -55,6 +55,16 @@ async fn get_author_last_name_nvc(pool: ConnPool, chars: web::Path<String>) -> H
     Ok(HttpResponse::Ok().json(data))
 }
 
+#[get("/book_title/{chars}/")]
+async fn get_book_title_nvc(pool: ConnPool, chars: web::Path<String>) -> HttpResult {
+    let chars = chars.into_inner();
+    let conn = pool.get().expect("couldn't get db connection from pool");
+    let data = web::block(move || actions::get_next_valid_chars(&conn, "titles", "book_title", chars))
+        .await
+        .map_err(|e| { eprintln!("{}", e); HttpResponse::InternalServerError().finish()})?;
+    Ok(HttpResponse::Ok().json(data))
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     std::env::set_var("RUST_LOG", "actix_web=info");
@@ -72,6 +82,7 @@ async fn main() -> std::io::Result<()> {
             .service(get_author_first_name_nvc)
             .service(get_author_middle_name_nvc)
             .service(get_author_last_name_nvc)
+            .service(get_book_title_nvc)
     })
     .bind(&bind)?
     .run()
