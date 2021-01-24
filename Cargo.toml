@@ -1,6 +1,6 @@
 [package]
 name = "fb2c"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["seb-odessa <seb@ukr.net>"]
 edition = "2018"
 build = "build.rs"
@@ -13,12 +13,14 @@ path = "src/lib/lib.rs"
 
 [dependencies]
     fb2parser = { git = "https://github.com/seb-odessa/fb2parser.git" }
-    clap = "2.33.2"
-    zip = "0.5.6"
+    clap = "2.33.3"
+    zip = "0.5.8"
     iconv = {git = "https://github.com/andelf/rust-iconv.git" }
-    diesel = { version = "1.4.5", features = ["sqlite", "numeric"] }
+    diesel = { version = "1.4.5", features = ["sqlite", "r2d2"] }
     dotenv = "0.15.0"
     md5 = "0.7.0"
+    actix = "0.10.0"
+    actix-web = "3.3.2"
+    env_logger = "0.8.2"
+    log = "0.4.13"
     
-
-

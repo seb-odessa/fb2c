@@ -12,3 +12,4 @@ pub mod database;
 pub mod schema_views;
 pub mod schema;
 pub mod models;
+pub mod actions;
