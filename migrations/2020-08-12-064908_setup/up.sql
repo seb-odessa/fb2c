@@ -18,7 +18,7 @@ CREATE TABLE books (
   book_offset     BIGINT NOT NULL,
   CONSTRAINT u_books UNIQUE(arch_id, book_file, book_crc32) ON CONFLICT IGNORE
 );
-CREATE VIEW books_view AS 
+CREATE VIEW books_view AS
 SELECT
 	arch_id,
 	arch_name,
@@ -49,8 +49,8 @@ CREATE TABLE  author_links (
   author_id   INTEGER NOT NULL REFERENCES authors(id),
   CONSTRAINT u_authors UNIQUE(book_id, author_id) ON CONFLICT IGNORE
 );
-CREATE VIEW authors_view AS 
-SELECT 
+CREATE VIEW authors_view AS
+SELECT
 	book_id,
 	first_name,
 	middle_name,
@@ -83,8 +83,8 @@ CREATE TABLE  title_links (
   title_id    INTEGER NOT NULL REFERENCES titles(id),
   CONSTRAINT u_authors UNIQUE(book_id, title_id) ON CONFLICT IGNORE
 );
-CREATE VIEW titles_view AS 
-SELECT 
+CREATE VIEW titles_view AS
+SELECT
 	book_id,
 	book_title
 FROM title_links LEFT JOIN titles ON (titles.id = book_id);
@@ -99,8 +99,8 @@ CREATE TABLE  genre_links (
   genre_id   INTEGER NOT NULL REFERENCES genres(id),
   CONSTRAINT u_authors UNIQUE(book_id, genre_id) ON CONFLICT IGNORE
 );
-CREATE VIEW genres_view AS 
-SELECT 
+CREATE VIEW genres_view AS
+SELECT
 	book_id,
 	genre_name
 FROM genre_links LEFT JOIN genres ON (genres.id = genre_id);
@@ -125,20 +125,20 @@ CREATE TABLE genre_synonyms (
   synonym_id  INTEGER NOT NULL REFERENCES genre_names(id)
 );
 
-CREATE VIEW genre_dict_view AS 
-SELECT 
-	G.id AS `id`, 
+CREATE VIEW genre_dict_view AS
+SELECT
+	G.id AS `id`,
 	G.name AS `code`,
 	ifnull(ifnull(N.name, GN.name), G.name) AS `name`,
 	ifnull(GG.name, '') AS `group`
-FROM genres G 
+FROM genres G
 LEFT JOIN genre_names N ON (G.name = N.code)
 LEFT JOIN genre_synonyms S ON (S.code = G.name) LEFT JOIN genre_names GN ON (S.synonym_id = GN.id)
 LEFT JOIN genre_groups GG ON (GG.id = N.group_id OR GG.id = GN.group_id);
 
 
-CREATE VIEW full_view AS 
-SELECT 
+CREATE VIEW full_view AS
+SELECT
 	arch_id,
 	arch_name,
 	arch_home,
@@ -177,7 +177,7 @@ INSERT INTO genre_groups (id, name) VALUES (12, 'справочная литер
 INSERT INTO genre_groups (id, name) VALUES (13, 'религия');
 INSERT INTO genre_groups (id, name) VALUES (14, 'научная и научно-популярная литература');
 INSERT INTO genre_groups (id, name) VALUES (15, 'юмористическая литература');
-	
+
 INSERT INTO genre_names (id, group_id, code, name) VALUES (0, 0, 'unknown', 'не классифицировано');
 
 INSERT INTO genre_names (group_id, code, name) VALUES (1, 'adv_animal',   'природа и животные');
@@ -436,6 +436,9 @@ INSERT INTO genre_synonyms (code, synonym_id) SELECT 'geography_book', id FROM g
 INSERT INTO genre_synonyms (code, synonym_id) SELECT 'prose_magic', id FROM genre_names WHERE code = 'sf_fantasy';
 INSERT INTO genre_synonyms (code, synonym_id) SELECT 'ЛитРПГ', id FROM genre_names WHERE code = 'sf_litrpg';
 INSERT INTO genre_synonyms (code, synonym_id) SELECT 'sf_writing', id FROM genre_names WHERE code = 'sf';
+INSERT INTO genre_synonyms (code, synonym_id) SELECT 'literature_19', id FROM genre_names WHERE code = 'prose';
+INSERT INTO genre_synonyms (code, synonym_id) SELECT 'literature_20', id FROM genre_names WHERE code = 'prose';
+
 
 
 
