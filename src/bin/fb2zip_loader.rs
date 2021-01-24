@@ -20,7 +20,7 @@ fn main() {
     let app = App::new(selfname)
         .version("1.0.0")
         .author("seb <seb@ukr.net>")
-        .about("FictionBook Library Database creator")
+        .about("FictionBook Library database loader")
         .arg(Arg::with_name("ARCHIVE.ZIP")
             .help("Sets the input file to use")
             .required(true)
