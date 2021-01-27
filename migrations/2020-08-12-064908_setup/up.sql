@@ -43,6 +43,11 @@ CREATE TABLE authors (
   uuid        TEXT NOT NULL,
   CONSTRAINT u_authors UNIQUE(first_name, middle_name, last_name, nickname, uuid) ON CONFLICT IGNORE
 );
+CREATE INDEX first_name_idx   ON authors (first_name  COLLATE NOCASE);
+CREATE INDEX middle_name_idx  ON authors (middle_name COLLATE NOCASE);
+CREATE INDEX last_name_idx    ON authors (last_name   COLLATE NOCASE);
+CREATE INDEX nickname_idx     ON authors (nickname    COLLATE NOCASE);
+
 CREATE TABLE  author_links (
   id          INTEGER NOT NULL PRIMARY KEY,
   book_id     INTEGER NOT NULL REFERENCES books(id),
@@ -87,7 +92,7 @@ CREATE VIEW titles_view AS
 SELECT
 	book_id,
 	book_title
-FROM title_links LEFT JOIN titles ON (titles.id = book_id);
+FROM title_links LEFT JOIN titles ON (titles.id = title_id);
 /****************************************************************************************************/
 CREATE TABLE genres (
   id      INTEGER NOT NULL PRIMARY KEY,

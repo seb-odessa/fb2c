@@ -7,7 +7,12 @@
 </head>
 
 <body>
-    <h1>Searching: {{first_name}} {{middle_name}} {{last_name}} </h1>
-    <p>Title: {{book_title}}</p>
+    <h3>Авторы:</h3>
+    <ul>
+        {{#each authors}}
+            <li>{{first_name}} {{middle_name}} {{last_name}}</li>
+        {{/each}}
+    </ul>
+
 </body>
 </html>

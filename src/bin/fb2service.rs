@@ -1,6 +1,7 @@
 extern crate env_logger;
 #[macro_use]
 extern crate serde_json;
+use serde::Serialize;
 
 use lib::actions;
 use actix_web::{get, middleware, web, App, Error, HttpResponse, HttpServer};
@@ -71,29 +72,33 @@ async fn get_author_last_name_nvc<'a>(ctx: WebCtx<'a>, chars: web::Path<String>)
     Ok(HttpResponse::Ok().json(data))
 }
 
+#[derive(Debug, Clone, Serialize)]
+struct AuthorsPage {
+    authors: Vec<actions::AuthorMask>
+}
+impl AuthorsPage {
+    pub fn new(authors: Vec<actions::AuthorMask>) -> Self {
+        Self { authors: authors }
+    }
+}
 
-#[get("/query/{fname}/{mname}/{lname}/{title}/")]
-async fn query<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String, String, String)>) -> WebResult      {
-    let (first_name, middle_name, last_name, book_title) = args.into_inner();
-    let _conn = ctx.pool.get().expect("couldn't get db connection from pool");
+
+#[get("/authors/{fname}/{mname}/{lname}/")]
+async fn query<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String, String)>) -> WebResult      {
+    let (first_name, middle_name, last_name) = args.into_inner();
+    let conn = ctx.pool.get().expect("couldn't get db connection from pool");
     let hb = &ctx.handlebars;
-    // let data = web::block(move || actions::get_next_valid_chars(&conn, "authors", "last_name", first_name))
-    //     .await
-    //     .map_err(|e| { eprintln!("{}", e); HttpResponse::InternalServerError().finish()})?;
+    let search_pattern = actions::AuthorMask::new(first_name, middle_name, last_name);
+    let holder = AuthorsPage::new(
+            web::block(move || actions::search_authors(&conn, &search_pattern))
+                .await
+                .map_err(|e| { eprintln!("{}", e); HttpResponse::InternalServerError().finish()})?
+        );
 
-    let search = json!({
-        "first_name": first_name,
-        "middle_name": middle_name,
-        "last_name": last_name,
-        "book_title": book_title
-    });
-    let body = hb.render("query", &search).unwrap();
+    let object = json!(&holder);
+    let body = hb.render("authors", &object).expect("couldn't render template");
 
-
-    Ok(HttpResponse::Ok()
-        .header("X-TEST", "value")
-        .body(body)
-    )
+    Ok(HttpResponse::Ok().body(body))
 }
 
 
