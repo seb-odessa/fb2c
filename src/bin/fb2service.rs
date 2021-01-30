@@ -1,7 +1,7 @@
 extern crate env_logger;
 #[macro_use]
 extern crate serde_json;
-use serde::Serialize;
+
 
 use lib::actions;
 use actix_web::{get, middleware, web, App, Error, HttpResponse, HttpServer};
@@ -23,84 +23,41 @@ impl<'a> Context<'a> {
 type WebCtx<'a> = web::Data<Context<'a>>;
 type WebResult = Result<HttpResponse, Error>;
 
-#[get("/user/{user_id}")]
-async fn get_user<'a>(ctx: WebCtx<'a>, id: web::Path<u32>) -> WebResult {
-    let id = id.into_inner();
+
+#[get("/")]
+async fn root<'a>(ctx: WebCtx<'a>) -> WebResult {
     let conn = ctx.pool.get().expect("couldn't get db connection from pool");
-    let user = web::block(move || actions::find_user_by_uid(id, &conn))
+    let page = web::block(move|| actions::get_root_ctx(&conn))
         .await
         .map_err(|e| {
             eprintln!("{}", e);
-            HttpResponse::InternalServerError().finish()
-        })?;
-    if let Some(user) = user {
-        Ok(HttpResponse::Ok().json(user))
-    } else {
-        let res = HttpResponse::NotFound()
-            .body(format!("No user found with uid: {}", id));
-        Ok(res)
-    }
-}
+            HttpResponse::InternalServerError().finish()})?;
 
-#[get("/authors/first_name/{chars}/")]
-async fn get_author_first_name_nvc<'a>(ctx: WebCtx<'a>, chars: web::Path<String>) -> WebResult {
-    let chars = chars.into_inner();
-    let conn = ctx.pool.get().expect("couldn't get db connection from pool");
-    let data = web::block(move || actions::get_next_valid_chars(&conn, "authors", "first_name", chars))
-        .await
-        .map_err(|e| { eprintln!("{}", e); HttpResponse::InternalServerError().finish()})?;
-    Ok(HttpResponse::Ok().json(data))
-}
-
-#[get("/authors/middle_name/{chars}/")]
-async fn get_author_middle_name_nvc<'a>(ctx: WebCtx<'a>, chars: web::Path<String>) -> WebResult {
-    let chars = chars.into_inner();
-    let conn = ctx.pool.get().expect("couldn't get db connection from pool");
-    let data = web::block(move || actions::get_next_valid_chars(&conn, "authors", "middle_name", chars))
-        .await
-        .map_err(|e| { eprintln!("{}", e); HttpResponse::InternalServerError().finish()})?;
-    Ok(HttpResponse::Ok().json(data))
-}
-
-#[get("/authors/last_name/{chars}/")]
-async fn get_author_last_name_nvc<'a>(ctx: WebCtx<'a>, chars: web::Path<String>) -> WebResult {
-    let chars = chars.into_inner();
-    let conn = ctx.pool.get().expect("couldn't get db connection from pool");
-    let data = web::block(move || actions::get_next_valid_chars(&conn, "authors", "last_name", chars))
-        .await
-        .map_err(|e| { eprintln!("{}", e); HttpResponse::InternalServerError().finish()})?;
-    Ok(HttpResponse::Ok().json(data))
-}
-
-#[derive(Debug, Clone, Serialize)]
-struct AuthorsPage {
-    authors: Vec<actions::AuthorMask>
-}
-impl AuthorsPage {
-    pub fn new(authors: Vec<actions::AuthorMask>) -> Self {
-        Self { authors: authors }
-    }
-}
-
-
-#[get("/authors/{fname}/{mname}/{lname}/")]
-async fn query<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String, String)>) -> WebResult      {
-    let (first_name, middle_name, last_name) = args.into_inner();
-    let conn = ctx.pool.get().expect("couldn't get db connection from pool");
     let hb = &ctx.handlebars;
-    let search_pattern = actions::AuthorMask::new(first_name, middle_name, last_name);
-    let holder = AuthorsPage::new(
-            web::block(move || actions::search_authors(&conn, &search_pattern))
-                .await
-                .map_err(|e| { eprintln!("{}", e); HttpResponse::InternalServerError().finish()})?
-        );
-
-    let object = json!(&holder);
-    let body = hb.render("authors", &object).expect("couldn't render template");
+    let body = hb.render("root", &json!(&page))
+                 .expect("couldn't render template");
 
     Ok(HttpResponse::Ok().body(body))
 }
 
+
+#[get("/authors/{fname}/{mname}/{lname}/")]
+async fn authors<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String, String)>) -> WebResult {
+    let (first_name, middle_name, last_name) = args.into_inner();
+    let pattern = actions::AuthorMask::new(first_name, middle_name, last_name);
+    let conn = ctx.pool.get().expect("couldn't get db connection from pool");
+    let page = web::block(move|| actions::get_author_ctx(&conn, &pattern))
+        .await
+        .map_err(|e| {
+            eprintln!("{}", e);
+            HttpResponse::InternalServerError().finish()})?;
+
+    let hb = &ctx.handlebars;
+    let body = hb.render("authors", &json!(&page))
+                 .expect("couldn't render template");
+
+    Ok(HttpResponse::Ok().body(body))
+}
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -110,8 +67,7 @@ async fn main() -> std::io::Result<()> {
 
     let templates = "./templates";
     let mut handlebars = Handlebars::new();
-    handlebars
-        .register_templates_directory(".hbs", templates)
+    handlebars.register_templates_directory(".hbs", templates)
         .expect(&format!("Can't register template directory {}", templates));
 
     let ctx = web::Data::new(Context::new(actions::get_connection_pool(), handlebars));
@@ -122,11 +78,8 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(ctx.clone())
             .wrap(middleware::Logger::default())
-            .service(get_user)
-            .service(get_author_first_name_nvc)
-            .service(get_author_middle_name_nvc)
-            .service(get_author_last_name_nvc)
-            .service(query)
+            .service(root)
+            .service(authors)
     })
     .bind(&bind)?
     .run()
