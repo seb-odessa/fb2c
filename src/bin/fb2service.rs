@@ -1,6 +1,7 @@
 extern crate env_logger;
 #[macro_use]
 extern crate serde_json;
+use actix_files::NamedFile;
 
 use lib::actions;
 use actix_web::{get, middleware, web, App, Error, HttpResponse, HttpServer};
@@ -21,6 +22,8 @@ impl<'a> Context<'a> {
 
 type WebCtx<'a> = web::Data<Context<'a>>;
 type WebResult = Result<HttpResponse, Error>;
+type FileResult = Result<NamedFile, Error>;
+
 
 
 #[get("/")]
@@ -92,23 +95,18 @@ async fn title<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String, String, Str
     Ok(HttpResponse::Ok().body(body))
 }
 
-#[get("/download/{archive}/{book}/")]
-async fn download<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String)>) -> WebResult {
+#[get("/download/{archive}/{book}")]
+async fn download<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String)>) -> FileResult {
 
     let (archive, book) = args.into_inner();
-
     let conn = ctx.pool.get().expect("couldn't get db connection from pool");
-    let page = web::block(move|| actions::load_download_ctx(&conn, &archive, &book))
+    let page = web::block(move|| actions::load_download_ctx(&conn, String::from("/tmp"), &archive, &book))
         .await
         .map_err(|e| {
             eprintln!("{}", e);
             HttpResponse::InternalServerError().finish()})?;
-
-
-    let body = ctx.handlebars.render("title", &json!(&page))
-                             .expect("couldn't render template");
-
-    Ok(HttpResponse::Ok().body(body))
+    page.extract()?;
+    Ok(page.get_stream()?)
 }
 
 #[actix_web::main]
@@ -134,6 +132,7 @@ async fn main() -> std::io::Result<()> {
             .service(authors)
             .service(author)
             .service(title)
+            .service(download)
     })
     .bind(&bind)?
     .run()

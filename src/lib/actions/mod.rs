@@ -176,8 +176,8 @@ pub fn load_author_title_ctx(conn: &SqliteConnection, author: &AuthorMask, title
     return Ok(ctx);
 }
 
-pub fn load_download_ctx(conn: &SqliteConnection, archive: &String, book: &String)-> QueryResult<DownloadContext> {
+pub fn load_download_ctx(conn: &SqliteConnection, workdir: String, archive: &String, book: &String)-> QueryResult<DownloadContext> {
 
     let record = BookRecord::load_by_archive_and_book(conn, archive, book)?;
-    return Ok(DownloadContext::new(record));
+    return Ok(DownloadContext::new(&workdir, record));
 }
