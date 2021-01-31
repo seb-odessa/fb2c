@@ -2,7 +2,6 @@ extern crate env_logger;
 #[macro_use]
 extern crate serde_json;
 
-
 use lib::actions;
 use actix_web::{get, middleware, web, App, Error, HttpResponse, HttpServer};
 use handlebars::Handlebars;
@@ -33,9 +32,8 @@ async fn root<'a>(ctx: WebCtx<'a>) -> WebResult {
             eprintln!("{}", e);
             HttpResponse::InternalServerError().finish()})?;
 
-    let hb = &ctx.handlebars;
-    let body = hb.render("root", &json!(&page))
-                 .expect("couldn't render template");
+    let body = ctx.handlebars.render("root", &json!(&page))
+                             .expect("couldn't render template");
 
     Ok(HttpResponse::Ok().body(body))
 }
@@ -52,9 +50,8 @@ async fn authors<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String, String)>)
             eprintln!("{}", e);
             HttpResponse::InternalServerError().finish()})?;
 
-    let hb = &ctx.handlebars;
-    let body = hb.render("find_authors", &json!(&page))
-                 .expect("couldn't render template");
+    let body = ctx.handlebars.render("find_authors", &json!(&page))
+                             .expect("couldn't render template");
 
     Ok(HttpResponse::Ok().body(body))
 }
@@ -70,9 +67,46 @@ async fn author<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String, String)>) 
             eprintln!("{}", e);
             HttpResponse::InternalServerError().finish()})?;
 
-    let hb = &ctx.handlebars;
-    let body = hb.render("author", &json!(&page))
-                 .expect("couldn't render template");
+    let body = ctx.handlebars.render("author", &json!(&page))
+                             .expect("couldn't render template");
+
+    Ok(HttpResponse::Ok().body(body))
+}
+
+#[get("/title/{fname}/{mname}/{lname}/{title}/")]
+async fn title<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String, String, String)>) -> WebResult {
+
+    let (first_name, middle_name, last_name, title) = args.into_inner();
+    let au = actions::AuthorMask::new(first_name, middle_name, last_name);
+    let conn = ctx.pool.get().expect("couldn't get db connection from pool");
+    let page = web::block(move|| actions::load_author_title_ctx(&conn, &au, &title))
+        .await
+        .map_err(|e| {
+            eprintln!("{}", e);
+            HttpResponse::InternalServerError().finish()})?;
+
+
+    let body = ctx.handlebars.render("title", &json!(&page))
+                             .expect("couldn't render template");
+
+    Ok(HttpResponse::Ok().body(body))
+}
+
+#[get("/download/{archive}/{book}/")]
+async fn download<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String)>) -> WebResult {
+
+    let (archive, book) = args.into_inner();
+
+    let conn = ctx.pool.get().expect("couldn't get db connection from pool");
+    let page = web::block(move|| actions::load_download_ctx(&conn, &archive, &book))
+        .await
+        .map_err(|e| {
+            eprintln!("{}", e);
+            HttpResponse::InternalServerError().finish()})?;
+
+
+    let body = ctx.handlebars.render("title", &json!(&page))
+                             .expect("couldn't render template");
 
     Ok(HttpResponse::Ok().body(body))
 }
@@ -99,6 +133,7 @@ async fn main() -> std::io::Result<()> {
             .service(root)
             .service(authors)
             .service(author)
+            .service(title)
     })
     .bind(&bind)?
     .run()

@@ -42,6 +42,13 @@ impl AuthorMask {
         }
     }
 
+    pub fn get_uri(&self) -> String {
+        format!("{}/{}/{}",
+            Self::encode(self.first_name.clone()),
+            Self::encode(self.middle_name.clone()),
+            Self::encode(self.last_name.clone()))
+    }
+
     pub fn new(first_name: String, middle_name: String, last_name: String) -> Self {
         Self {
             first_name: Self::decode(first_name),

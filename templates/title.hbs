@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <title>{{last_name}} {{first_name}} {{middle_name}} - {{title}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style>
+        table, th, td { border: 1px solid black; border-collapse: collapse; }
+        th, td { padding: 5px; }
+    </style>
+</head>
+
+<body>
+
+    <h3>{{last_name}} {{first_name}} {{middle_name}}</h3>
+    <h2>{{title}}</h2>
+
+    <table>
+    <tr><th>Загрузка</th><th>Название</th><th>Имя Файла</th><th>Размер</th><th>crc32</th><th>Имя Архива</th></tr>
+        {{#each books}}
+            <tr><td>{{{book_url}}}</td><td>{{book_title}}</td><td>{{book_file}}</td><td>{{book_size}}</td><td>{{book_crc32}}</td><td>{{arch_name}}</td>    </tr>
+        {{/each}}
+    </table>
+
+    <a href="/">домой</a>
+
+</body>
+</html>

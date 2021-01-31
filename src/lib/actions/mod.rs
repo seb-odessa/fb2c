@@ -12,6 +12,14 @@ pub mod author_context;
 pub use author_context::{FindAuthorContext, AuthorContext};
 pub mod root_context;
 pub use root_context::RootContext;
+pub mod title_context;
+pub use title_context::TitleContext;
+pub mod book_record;
+pub use book_record::{BookRecord, BookStringified};
+pub mod download_context;
+pub use download_context::DownloadContext;
+
+
 
 pub fn get_connection_pool() -> ConnectionPool {
     let connspec = std::env::var("DATABASE_URL").expect("DATABASE_URL");
@@ -107,6 +115,7 @@ pub fn get_titles(conn: &SqliteConnection, author: &AuthorMask) -> QueryResult<V
             )
 }
 
+
 pub fn urify_authors(url: &str, authors: Vec<AuthorMask>) -> Vec<String> {
     authors.iter().map(|author|
         format!("<a href='/{}/{}/{}/{}/'>{}</a>",
@@ -130,11 +139,19 @@ pub fn get_find_authors_ctx(conn: &SqliteConnection, url: &str, mask: &AuthorMas
     return Ok(ctx);
 }
 
+pub fn urify_titles(url: &str, author: &AuthorMask, titles: Vec<String>) -> Vec<String> {
+    titles.iter().map(|title|
+        format!("<a href='/{url}/{author}/{title}/'>{title}</a>",
+            url = url,
+            author = author.get_uri(),
+            title = title)
+        ).collect()
+}
 
 pub fn get_author_ctx(conn: &SqliteConnection, url: &str, author: &AuthorMask) -> QueryResult<AuthorContext> {
 
     let mut ctx = AuthorContext::new(url, author);
-    ctx.titles = get_titles(conn, author)?;
+    ctx.titles = urify_titles("title", author, get_titles(conn, author)?);
 
     return Ok(ctx);
 }
@@ -149,4 +166,18 @@ pub fn get_root_ctx(conn: &SqliteConnection) -> QueryResult<RootContext> {
     ctx.load_last_name_nvc(get_next_valid_chars(conn, "authors", "last_name", &String::new())?);
 
     return Ok(ctx);
+}
+
+
+pub fn load_author_title_ctx(conn: &SqliteConnection, author: &AuthorMask, title: &String)-> QueryResult<TitleContext> {
+
+    let mut ctx = TitleContext::new(author, title.clone());
+    ctx.books = BookStringified::transform(BookRecord::load_by_author_and_title(conn, author, &title)?);
+    return Ok(ctx);
+}
+
+pub fn load_download_ctx(conn: &SqliteConnection, archive: &String, book: &String)-> QueryResult<DownloadContext> {
+
+    let record = BookRecord::load_by_archive_and_book(conn, archive, book)?;
+    return Ok(DownloadContext::new(record));
 }
