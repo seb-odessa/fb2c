@@ -89,7 +89,7 @@ pub fn get_titles(conn: &SqliteConnection, author: &AuthorMask) -> QueryResult<V
         #[sql_type = "Text"] pub content: String,
     }
     let query = format!(r#"
-        SELECT book_title as content
+        SELECT DISTINCT book_title as content
         FROM author_links
         JOIN title_links ON (author_links.book_id = title_links.book_id)
         LEFT JOIN authors ON (author_links.author_id = authors.id)
@@ -109,22 +109,19 @@ pub fn get_titles(conn: &SqliteConnection, author: &AuthorMask) -> QueryResult<V
 
 pub fn urify_authors(url: &str, authors: Vec<AuthorMask>) -> Vec<String> {
     authors.iter().map(|author|
-        {
-            let s = format!("<a href='/{}/{}/{}/{}/'>{}</a>",
+        format!("<a href='/{}/{}/{}/{}/'>{}</a>",
             url,
             AuthorMask::encode(author.first_name.clone()),
             AuthorMask::encode(author.middle_name.clone()),
             AuthorMask::encode(author.last_name.clone()),
-            author.get_full_name());
-        println!("{}", s);
-        return s;
-        }
+            author.get_full_name())
         ).collect()
 }
 
 pub fn get_find_authors_ctx(conn: &SqliteConnection, url: &str, mask: &AuthorMask) -> QueryResult<FindAuthorContext> {
 
     let mut ctx = FindAuthorContext::new(url, mask);
+    println!("{:?}", ctx);
     ctx.authors = urify_authors("author", get_authors(conn, &mask)?);
     ctx.load_first_name_nvc(get_next_valid_authors(conn, "first_name", &mask)?);
     ctx.load_middle_name_nvc(get_next_valid_authors(conn, "middle_name", &mask)?);

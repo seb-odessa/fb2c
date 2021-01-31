@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <title>Поиск авторов</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+
+<body>
+
+    <h3>Авторы</h3>
+    <p>
+        Фамилия:
+        [ {{#each last_name_nvc}} {{{this}}} {{/each}} ]
+        <a href="/find_authors/{{first_name}}/{{middle_name}}/-/">[X]</a>
+    </p>
+    <p>
+        Имя:
+        [ {{#each first_name_nvc}} {{{this}}} {{/each}} ]
+        <a href="/find_authors/-/{{middle_name}}/{{last_name}}/">[X]</a>
+    </p>
+    <p>
+        Отчество:
+        [ {{#each middle_name_nvc}} {{{this}}} {{/each}} ]
+        <a href="/find_authors/{{first_name}}/-/{{last_name}}/">[X]</a>
+    </p>
+
+    <ul>
+        {{#each authors}}
+            <li>{{{this}}}</li>
+        {{/each}}
+    </ul>
+
+      <!--  -->
+    <a href="/">домой</a>
+
+</body>
+</html>

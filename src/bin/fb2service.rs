@@ -53,7 +53,7 @@ async fn authors<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String, String)>)
             HttpResponse::InternalServerError().finish()})?;
 
     let hb = &ctx.handlebars;
-    let body = hb.render("authors", &json!(&page))
+    let body = hb.render("find_authors", &json!(&page))
                  .expect("couldn't render template");
 
     Ok(HttpResponse::Ok().body(body))

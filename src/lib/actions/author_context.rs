@@ -16,9 +16,9 @@ impl FindAuthorContext {
 
     pub fn new(url: &str, mask: &AuthorMask) -> Self {
         Self {
-            first_name: mask.first_name.clone(),
-            middle_name: mask.middle_name.clone(),
-            last_name: mask.last_name.clone(),
+            first_name: mask.get_encoded_by_name("first_name"),
+            middle_name: mask.get_encoded_by_name("middle_name"),
+            last_name: mask.get_encoded_by_name("last_name"),
             root_url: String::from(url),
             authors: Vec::new(),
             first_name_nvc: Vec::new(),

@@ -24,8 +24,8 @@ impl AuthorMask {
         }
     }
 
-    pub fn get_length_by_name(&self, filed_name: &str) -> usize {
-        match filed_name {
+    pub fn get_length_by_name(&self, name: &str) -> usize {
+        match name {
             "first_name" => self.first_name.chars().count(),
             "middle_name" => self.middle_name.chars().count(),
             "last_name" => self.last_name.chars().count(),
@@ -33,6 +33,14 @@ impl AuthorMask {
         }
     }
 
+    pub fn get_encoded_by_name(&self, name: &str) -> String {
+        match name {
+            "first_name" => Self::encode(self.first_name.clone()),
+            "middle_name" => Self::encode(self.middle_name.clone()),
+            "last_name" => Self::encode(self.last_name.clone()),
+            _ => String::new()
+        }
+    }
 
     pub fn new(first_name: String, middle_name: String, last_name: String) -> Self {
         Self {
