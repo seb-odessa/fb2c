@@ -41,12 +41,12 @@ async fn root<'a>(ctx: WebCtx<'a>) -> WebResult {
 }
 
 
-#[get("/authors/{fname}/{mname}/{lname}/")]
+#[get("/find_authors/{fname}/{mname}/{lname}/")]
 async fn authors<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String, String)>) -> WebResult {
     let (first_name, middle_name, last_name) = args.into_inner();
     let pattern = actions::AuthorMask::new(first_name, middle_name, last_name);
     let conn = ctx.pool.get().expect("couldn't get db connection from pool");
-    let page = web::block(move|| actions::get_author_ctx(&conn, &pattern))
+    let page = web::block(move|| actions::get_find_authors_ctx(&conn, "find_authors", &pattern))
         .await
         .map_err(|e| {
             eprintln!("{}", e);
@@ -54,6 +54,24 @@ async fn authors<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String, String)>)
 
     let hb = &ctx.handlebars;
     let body = hb.render("authors", &json!(&page))
+                 .expect("couldn't render template");
+
+    Ok(HttpResponse::Ok().body(body))
+}
+
+#[get("/author/{fname}/{mname}/{lname}/")]
+async fn author<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String, String)>) -> WebResult {
+    let (first_name, middle_name, last_name) = args.into_inner();
+    let author = actions::AuthorMask::new(first_name, middle_name, last_name);
+    let conn = ctx.pool.get().expect("couldn't get db connection from pool");
+    let page = web::block(move|| actions::get_author_ctx(&conn, "author", &author))
+        .await
+        .map_err(|e| {
+            eprintln!("{}", e);
+            HttpResponse::InternalServerError().finish()})?;
+
+    let hb = &ctx.handlebars;
+    let body = hb.render("author", &json!(&page))
                  .expect("couldn't render template");
 
     Ok(HttpResponse::Ok().body(body))
@@ -72,7 +90,7 @@ async fn main() -> std::io::Result<()> {
 
     let ctx = web::Data::new(Context::new(actions::get_connection_pool(), handlebars));
 
-    let bind = "127.0.0.1:8080";
+    let bind = "home:8080";
     println!("Starting server at: {}", &bind);
     HttpServer::new(move || {
         App::new()
@@ -80,6 +98,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
             .service(root)
             .service(authors)
+            .service(author)
     })
     .bind(&bind)?
     .run()

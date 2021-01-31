@@ -1,6 +1,8 @@
 
 DROP VIEW IF EXISTS full_view;
 
+DROP VIEW IF EXISTS author_title_view;
+
 DROP VIEW IF EXISTS titles_view;
 DROP TABLE IF EXISTS title_links;
 DROP TABLE IF EXISTS titles;

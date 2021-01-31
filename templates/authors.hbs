@@ -2,7 +2,7 @@
 <html lang="ru">
 
 <head>
-    <title>Query page</title>
+    <title>Поиск авторов</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 
@@ -15,9 +15,12 @@
 
     <ul>
         {{#each authors}}
-            <li>{{last_name}} {{first_name}} {{middle_name}}</li>
+            <li>{{{this}}}</li>
         {{/each}}
     </ul>
+
+      <!-- <a href="{{url}}">{{title}}</a> -->
+    <a href="/">домой</a>
 
 </body>
 </html>
