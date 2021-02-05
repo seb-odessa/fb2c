@@ -130,7 +130,6 @@ pub fn urify_authors(url: &str, authors: Vec<AuthorMask>) -> Vec<String> {
 pub fn get_find_authors_ctx(conn: &SqliteConnection, url: &str, mask: &AuthorMask) -> QueryResult<FindAuthorContext> {
 
     let mut ctx = FindAuthorContext::new(url, mask);
-    println!("{:?}", ctx);
     ctx.authors = urify_authors("author", get_authors(conn, &mask)?);
     ctx.load_first_name_nvc(get_next_valid_authors(conn, "first_name", &mask)?);
     ctx.load_middle_name_nvc(get_next_valid_authors(conn, "middle_name", &mask)?);
@@ -156,7 +155,6 @@ pub fn get_author_ctx(conn: &SqliteConnection, url: &str, author: &AuthorMask) -
     return Ok(ctx);
 }
 
-
 pub fn get_root_ctx(conn: &SqliteConnection) -> QueryResult<RootContext> {
 
     let mut ctx = RootContext::new();
@@ -167,7 +165,6 @@ pub fn get_root_ctx(conn: &SqliteConnection) -> QueryResult<RootContext> {
 
     return Ok(ctx);
 }
-
 
 pub fn load_author_title_ctx(conn: &SqliteConnection, author: &AuthorMask, title: &String)-> QueryResult<TitleContext> {
 

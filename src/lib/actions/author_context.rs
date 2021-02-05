@@ -4,8 +4,11 @@ use super::author_mask::AuthorMask;
 #[derive(Debug, Clone, Serialize)]
 pub struct FindAuthorContext {
     pub first_name: String,
+    pub first_name_previous: String,
     pub middle_name: String,
+    pub middle_name_previous: String,
     pub last_name: String,
+    pub last_name_previous: String,
     pub root_url: String,
     pub authors: Vec<String>,
     pub first_name_nvc: Vec<String>,
@@ -17,8 +20,11 @@ impl FindAuthorContext {
     pub fn new(url: &str, mask: &AuthorMask) -> Self {
         Self {
             first_name: mask.get_encoded_by_name("first_name"),
+            first_name_previous: mask.get_encoded_by_name_previous("first_name"),
             middle_name: mask.get_encoded_by_name("middle_name"),
+            middle_name_previous: mask.get_encoded_by_name_previous("middle_name"),
             last_name: mask.get_encoded_by_name("last_name"),
+            last_name_previous: mask.get_encoded_by_name_previous("last_name"),
             root_url: String::from(url),
             authors: Vec::new(),
             first_name_nvc: Vec::new(),

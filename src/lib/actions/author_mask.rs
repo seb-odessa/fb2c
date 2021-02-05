@@ -42,6 +42,14 @@ impl AuthorMask {
         }
     }
 
+    pub fn get_encoded_by_name_previous(&self, name: &str) -> String {
+        let mut name = self.get_encoded_by_name(name);
+        if "-" != &name{
+            name.pop();
+        }
+        return name;
+    }
+
     pub fn get_uri(&self) -> String {
         format!("{}/{}/{}",
             Self::encode(self.first_name.clone()),
