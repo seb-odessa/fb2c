@@ -16,9 +16,9 @@
     <h2>{{title}}</h2>
 
     <table>
-    <tr><th>Загрузка</th><th>Название</th><th>Имя Файла</th><th>Размер</th><th>crc32</th><th>Имя Архива</th></tr>
+    <tr><th colspan="2">Загрузка</th><th>Название</th><th>Имя Файла</th><th>Размер</th><th>crc32</th><th>Имя Архива</th></tr>
         {{#each books}}
-            <tr><td>{{{book_url}}}</td><td>{{book_title}}</td><td>{{book_file}}</td><td>{{book_size}}</td><td>{{book_crc32}}</td><td>{{arch_name}}</td>    </tr>
+            <tr><td>{{{book_url}}}</td><td>{{{book_zip_url}}}</td><td>{{book_title}}</td><td>{{book_file}}</td><td>{{book_size}}</td><td>{{book_crc32}}</td><td>{{arch_name}}</td>    </tr>
         {{/each}}
     </table>
 

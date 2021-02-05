@@ -97,7 +97,6 @@ async fn title<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String, String, Str
 
 #[get("/download/{archive}/{book}")]
 async fn download<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String)>) -> FileResult {
-
     let (archive, book) = args.into_inner();
     let conn = ctx.pool.get().expect("couldn't get db connection from pool");
     let page = web::block(move|| actions::load_download_ctx(&conn, String::from("/tmp"), &archive, &book))
@@ -105,8 +104,19 @@ async fn download<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String)>) -> Fil
         .map_err(|e| {
             eprintln!("{}", e);
             HttpResponse::InternalServerError().finish()})?;
-    page.extract()?;
-    Ok(page.get_stream()?)
+    Ok(page.get_unzipped_stream()?)
+}
+
+#[get("/download_zip/{archive}/{book}")]
+async fn download_zip<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String)>) -> FileResult {
+    let (archive, book) = args.into_inner();
+    let conn = ctx.pool.get().expect("couldn't get db connection from pool");
+    let page = web::block(move|| actions::load_download_ctx(&conn, String::from("/tmp"), &archive, &book))
+        .await
+        .map_err(|e| {
+            eprintln!("{}", e);
+            HttpResponse::InternalServerError().finish()})?;
+    Ok(page.get_zipped_stream()?)
 }
 
 #[actix_web::main]
@@ -133,6 +143,7 @@ async fn main() -> std::io::Result<()> {
             .service(author)
             .service(title)
             .service(download)
+            .service(download_zip)
     })
     .bind(&bind)?
     .run()

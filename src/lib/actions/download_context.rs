@@ -2,10 +2,9 @@ use std::io;
 use std::fs;
 use std::path::Path;
 use actix_files::NamedFile;
-
+use std::ffi::OsStr;
 
 use super::book_record::BookRecord;
-
 
 #[derive(Debug)]
 pub struct DownloadContext {
@@ -28,24 +27,44 @@ impl DownloadContext {
         }
     }
 
-    pub fn extract(&self) -> io::Result<()> {
-        let full_name = format!("{}/{}", self.book.arch_home, self.book.arch_name);
-        let zip_path = Path::new(&full_name);
-        let zip_file = fs::File::open(&zip_path)?;
+    fn unzip(arch: &Path, book: &String, outfile: &Path) -> io::Result<()> {
+        let zip_file = fs::File::open(arch)?;
         let mut archive = zip::ZipArchive::new(zip_file)?;
-        let mut file = archive.by_name(&self.book.book_file)?;
-        let full_path = Path::new(&self.workdir).join(&self.book.book_file);
-        let mut outfile = fs::File::create(&full_path)?;
-        io::copy(&mut file, &mut outfile).unwrap();
+        let mut file = archive.by_name(book)?;
+        let mut out = fs::File::create(&outfile)?;
+        io::copy(&mut file, &mut out)?;
         Ok(())
     }
 
-    // pub fn getFileName(&self) -> String {
-    //     format!("")
-    // }
+    fn zip(infile: &Path, outfile: &Path) -> io::Result<()> {
+        let arch = fs::File::create(outfile)?;
+        let mut archive = zip::ZipWriter::new(arch);
+        let options = zip::write::FileOptions::default().compression_method(zip::CompressionMethod::Deflated);
+        let book: &str = infile.file_name().and_then(OsStr::to_str).unwrap_or("");
 
-    pub fn get_stream(&self) -> io::Result<NamedFile> {
-        let full_path = Path::new(&self.workdir).join(&self.book.book_file);
-        NamedFile::open(full_path)
+        archive.start_file(book, options)?;
+        let mut file = fs::File::open(infile)?;
+        io::copy(&mut file, &mut archive)?;
+        archive.finish()?;
+        Ok(())
+    }
+
+    pub fn get_unzipped_stream(&self) -> io::Result<NamedFile> {
+        let arch = Path::new(&self.book.arch_home).join(&self.book.arch_name);
+        let outfile = Path::new(&self.workdir).join(&self.book.book_file);
+        Self::unzip(&arch, &self.book.book_file, &outfile)?;
+        NamedFile::open(outfile)
+    }
+
+    pub fn get_zipped_stream(&self) -> io::Result<NamedFile> {
+        let arch = Path::new(&self.book.arch_home).join(&self.book.arch_name);
+        let unzipped = Path::new(&self.workdir).join(&self.book.book_file);
+        Self::unzip(&arch, &self.book.book_file, &unzipped)?;
+
+        let ext = unzipped.extension().and_then(OsStr::to_str).unwrap_or("");
+        let new_ext = format!("{}.zip", ext);
+        let zipped = unzipped.with_extension(new_ext);
+        Self::zip(&unzipped, &zipped)?;
+        NamedFile::open(zipped)
     }
 }

@@ -71,6 +71,7 @@ impl BookRecord {
 #[derive(Debug, Clone, Serialize)]
 pub struct BookStringified {
     pub book_url: String,
+    pub book_zip_url: String,
     pub book_title: String,
     pub book_file: String,
     pub book_size: String,
@@ -83,7 +84,8 @@ impl BookStringified {
         let mut result = Vec::new();
         for book in books {
             result.push(Self {
-                book_url: format!("<a href='/download/{}/{}'>Загрузить</a>", book.arch_name, book.book_file),
+                book_url: format!("<a href='/download/{}/{}'>fb2</a>", book.arch_name, book.book_file),
+                book_zip_url: format!("<a href='/download_zip/{}/{}'>fb2.zip</a>", book.arch_name, book.book_file),
                 book_title: book.book_title,
                 book_file: book.book_file,
                 book_size: format!("{}", book.book_size.to_formatted_string(&Locale::fr)),
