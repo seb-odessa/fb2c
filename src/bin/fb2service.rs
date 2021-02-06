@@ -99,7 +99,7 @@ async fn title<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String, String, Str
 async fn download<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String)>) -> FileResult {
     let (archive, book) = args.into_inner();
     let conn = ctx.pool.get().expect("couldn't get db connection from pool");
-    let page = web::block(move|| actions::load_download_ctx(&conn, String::from("/tmp"), &archive, &book))
+    let mut page = web::block(move|| actions::load_download_ctx(&conn, String::from("/tmp"), &archive, &book))
         .await
         .map_err(|e| {
             eprintln!("{}", e);
@@ -111,7 +111,7 @@ async fn download<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String)>) -> Fil
 async fn download_zip<'a>(ctx: WebCtx<'a>, args: web::Path<(String, String)>) -> FileResult {
     let (archive, book) = args.into_inner();
     let conn = ctx.pool.get().expect("couldn't get db connection from pool");
-    let page = web::block(move|| actions::load_download_ctx(&conn, String::from("/tmp"), &archive, &book))
+    let mut page = web::block(move|| actions::load_download_ctx(&conn, String::from("/tmp"), &archive, &book))
         .await
         .map_err(|e| {
             eprintln!("{}", e);
