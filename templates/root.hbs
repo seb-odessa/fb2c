@@ -7,10 +7,30 @@
 </head>
 
 <body>
-    <h3>Поиск Автора</h3>
-    <p>Фамилия: [ {{#each last_name_nvc}} {{{this}}} {{/each}} ]</p>
-    <p>Имя: [ {{#each first_name_nvc}} {{{this}}} {{/each}} ]</p>
-    <p>Отчество: [ {{#each middle_name_nvc}} {{{this}}} {{/each}} ]</p>
+    <h3>Поиск по автору</h3>
+    <table>
+    <tr><th></th><th>Возможные варианты</th></tr>
+        <tr>
+            <td align="right">Фамилии</td>
+            <td>{{#each last_name_nvc}} {{{this}}} {{/each}}</td>
+        </tr>
+        <tr>
+            <td align="right">Имена</td>
+            <td>{{#each first_name_nvc}} {{{this}}} {{/each}}</td>
+        </tr>
+        <tr>
+            <td align="right">Отчества</td>
+            <td>{{#each middle_name_nvc}} {{{this}}} {{/each}}</td>
+        </tr>
+    </table>
+    <h3>Поиск по названию</h3>
+    <table>
+        <tr><th></th><th>Возможные варианты</th></tr>
+        <tr>
+            <td align="right">Названия</td>
+            <td>{{#each book_title_nvc}} {{{this}}} {{/each}}</td>
+        </tr>
+    </table>
 
 </body>
 </html>

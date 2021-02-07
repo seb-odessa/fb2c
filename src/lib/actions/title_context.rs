@@ -1,6 +1,29 @@
 use serde::Serialize;
+use diesel::sql_types::Text;
 use super::author_mask::AuthorMask;
 use super::book_record::BookStringified;
+
+
+#[derive(QueryableByName, Debug, Clone, Serialize)]
+pub struct TitleMask {
+    #[sql_type = "Text"] pub book_title: String,
+}
+impl TitleMask {
+    pub fn new(title: String) -> Self {
+        Self { book_title: title }
+    }
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct FindTitleContext {
+    pub titles_nvc: Vec<String>,
+}
+impl FindTitleContext {
+    pub fn new() -> Self {
+        Self { titles_nvc: Vec::new() }
+    }
+}
+
 
 #[derive(Debug, Clone, Serialize)]
 pub struct TitleContext {

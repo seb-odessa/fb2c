@@ -8,8 +8,8 @@ pub struct AuthorMask {
     #[sql_type = "Text"] pub last_name: String,
 }
 impl AuthorMask {
-    pub fn decode(mask: String) -> String {
-        if mask.starts_with("-") {
+    fn decode(mask: String) -> String {
+        if &mask == "-" {
             String::new()
         } else {
             mask
@@ -63,6 +63,12 @@ impl AuthorMask {
             middle_name: Self::decode(middle_name),
             last_name: Self::decode(last_name),
         }
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.first_name.is_empty() &&
+        self.middle_name.is_empty() &&
+        self.last_name.is_empty()
     }
 
     pub fn get_full_name(&self) -> String {

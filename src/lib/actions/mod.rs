@@ -13,7 +13,7 @@ pub use author_context::{FindAuthorContext, AuthorContext};
 pub mod root_context;
 pub use root_context::RootContext;
 pub mod title_context;
-pub use title_context::TitleContext;
+pub use title_context::{TitleMask, TitleContext, FindTitleContext};
 pub mod book_record;
 pub use book_record::{BookRecord, BookStringified};
 pub mod download_context;
@@ -82,7 +82,6 @@ pub fn get_authors(conn: &SqliteConnection, mask: &AuthorMask) -> QueryResult<Ve
             SELECT DISTINCT first_name, middle_name, last_name
             FROM authors {where_clause}
             ORDER BY last_name, first_name, middle_name
-            LIMIT 100
         "#,
         where_clause = mask.get_where_like_clause()
     );
@@ -127,16 +126,26 @@ pub fn urify_authors(url: &str, authors: Vec<AuthorMask>) -> Vec<String> {
         ).collect()
 }
 
-pub fn get_find_authors_ctx(conn: &SqliteConnection, url: &str, mask: &AuthorMask) -> QueryResult<FindAuthorContext> {
+pub fn get_authors_page(conn: &SqliteConnection, url: &str, mask: &AuthorMask) -> QueryResult<FindAuthorContext> {
 
     let mut ctx = FindAuthorContext::new(url, mask);
-    ctx.authors = urify_authors("author", get_authors(conn, &mask)?);
+    if !mask.is_empty()
+    {
+        ctx.authors = urify_authors("author", get_authors(conn, &mask)?);
+    }
+
     ctx.load_first_name_nvc(get_next_valid_authors(conn, "first_name", &mask)?);
     ctx.load_middle_name_nvc(get_next_valid_authors(conn, "middle_name", &mask)?);
     ctx.load_last_name_nvc(get_next_valid_authors(conn, "last_name", &mask)?);
 
     return Ok(ctx);
 }
+
+pub fn load_titles_page(_conn: &SqliteConnection, _url: &str, _mask: &TitleMask) -> QueryResult<FindTitleContext> {
+
+    Ok(FindTitleContext::new())
+}
+
 
 pub fn urify_titles(url: &str, author: &AuthorMask, titles: Vec<String>) -> Vec<String> {
     titles.iter().map(|title|
@@ -155,13 +164,25 @@ pub fn get_author_ctx(conn: &SqliteConnection, url: &str, author: &AuthorMask) -
     return Ok(ctx);
 }
 
-pub fn get_root_ctx(conn: &SqliteConnection) -> QueryResult<RootContext> {
+pub fn get_root_page(conn: &SqliteConnection) -> QueryResult<RootContext> {
 
+    let empty = String::new();
     let mut ctx = RootContext::new();
+    ctx.first_name_nvc = get_next_valid_chars(conn, "authors", "first_name", &empty)?
+        .iter()
+        .map(|value| format!("<a href='/authors/-/-/{}/'>{}</a>", AuthorMask::encode(value.clone()),value)).collect();
 
-    ctx.load_first_name_nvc(get_next_valid_chars(conn, "authors", "first_name", &String::new())?);
-    ctx.load_middle_name_nvc(get_next_valid_chars(conn, "authors", "middle_name", &String::new())?);
-    ctx.load_last_name_nvc(get_next_valid_chars(conn, "authors", "last_name", &String::new())?);
+    ctx.middle_name_nvc = get_next_valid_chars(conn, "authors", "middle_name", &empty)?
+        .iter()
+        .map(|value| format!("<a href='/authors/-/{}/-/'>{}</a>", AuthorMask::encode(value.clone()),value)).collect();
+
+    ctx.last_name_nvc = get_next_valid_chars(conn, "authors", "last_name", &empty)?
+        .iter()
+        .map(|value| format!("<a href='/authors/-/-/{}/'>{}</a>", AuthorMask::encode(value.clone()),value)).collect();
+
+    ctx.book_title_nvc = get_next_valid_chars(conn, "titles", "book_title", &empty)?
+        .iter()
+        .map(|value| format!("<a href='/titles/{}/'>{}</a>", AuthorMask::encode(value.clone()),value)).collect();
 
     return Ok(ctx);
 }

@@ -101,9 +101,9 @@ SELECT
 	last_name,
 	book_title
 FROM author_links
-JOIN title_links ON (author_links.book_id = title_links.book_id)
+LEFT JOIN title_links ON (author_links.book_id = title_links.book_id)
 LEFT JOIN authors ON (author_links.author_id = authors.id)
-LEFT JOIN titles ON (title_links.title_id = titles.id)
+LEFT JOIN titles ON (title_links.title_id = titles.id);
 
 /****************************************************************************************************/
 CREATE TABLE genres (

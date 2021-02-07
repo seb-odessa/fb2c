@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Поиск автора</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style>
+        table, th, td { border: 0px solid black; border-collapse: collapse; }
+        th, td { padding: 5px; }
+    </style>
+</head>
+<body>
+
+    <h3>ФИО автора (маска): {{last_name}}* {{first_name}}* {{middle_name}}*</h3>
+
+
+    <table>
+    <tr><th></th><th></th><th></th><th>Возможные варианты</th></tr>
+        <tr>
+            <td align="right">Фамилии</td>
+            <td><a href="/authors/{{first_name}}/{{middle_name}}/-/">[Сброс]</a></td>
+            <td><a href="/authors/{{first_name}}/{{middle_name}}/{{last_name_previous}}/">[{{last_name_previous}}]</a></td>
+            <td>{{#each last_name_nvc}} {{{this}}} {{/each}}</td>
+        </tr>
+        <tr>
+            <td align="right">Имена</td>
+            <td><a href="/authors/-/{{middle_name}}/{{last_name}}/">[Сброс]</a></td>
+            <td><a href="/authors/{{first_name_previous}}/{{middle_name}}/{{last_name}}/">[{{first_name_previous}}]</a></td>
+            <td>{{#each first_name_nvc}} {{{this}}} {{/each}}</td>
+        </tr>
+        <tr>
+            <td align="right">Отчества</td>
+            <td><a href="/authors/{{first_name}}/-/{{last_name}}/">[Сброс]</a></td>
+            <td><a href="/authors/{{first_name}}/{{middle_name_previous}}/{{last_name}}/">[{{middle_name_previous}}]</a></td>
+            <td>{{#each middle_name_nvc}} {{{this}}} {{/each}}</td>
+        </tr>
+    </table>
+
+    <ul>
+        {{#each authors}}
+            <li>{{{this}}}</li>
+        {{/each}}
+    </ul>
+
+    <a href="/">домой</a>
+
+</body>
+</html>
