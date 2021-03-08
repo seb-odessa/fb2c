@@ -3,6 +3,7 @@ extern crate env_logger;
 extern crate serde_json;
 use actix_files::NamedFile;
 
+use std::env;
 use lib::actions;
 use actix_web::{get, middleware, web, App, Error, HttpResponse, HttpServer};
 use handlebars::Handlebars;
@@ -148,7 +149,8 @@ async fn main() -> std::io::Result<()> {
 
     let ctx = web::Data::new(Context::new(actions::get_connection_pool(), handlebars));
 
-    let bind = "home:8080";
+    let bind = env::var("INTERFACE").expect("INTERFACE must be set, e.g.: 192.168.0.1:8080");
+    //let bind = "home:8080";
     println!("Starting server at: {}", &bind);
     HttpServer::new(move || {
         App::new()
