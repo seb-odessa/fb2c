@@ -161,11 +161,12 @@ pub fn get_authors_page(conn: &SqliteConnection, url: &str, mask: &AuthorMask) -
 
 pub fn urify_titles_by_authors(url: &str, masks: &Vec<TitleMask>) -> Vec<String> {
     masks.iter().map(|mask|
-        format!("<a href='/{}/{}/{}/{}/'>{} ({} {} {})</a>",
+        format!("<a href='/{}/{}/{}/{}/{}/'>{} ({} {} {})</a>",
             url,
             AuthorMask::encode(mask.first_name.clone()),
             AuthorMask::encode(mask.middle_name.clone()),
             AuthorMask::encode(mask.last_name.clone()),
+            mask.book_title,
             mask.book_title,
             mask.last_name, mask.first_name, mask.middle_name
         )
@@ -178,7 +179,7 @@ pub fn load_titles_page(conn: &SqliteConnection, url: &str, mask: &TitleMask) ->
     ctx.title_and_author = get_titles_with_author(conn, mask)?;
     if !mask.is_empty()
     {
-        ctx.titles = urify_titles_by_authors("author", &ctx.title_and_author);
+        ctx.titles = urify_titles_by_authors("title", &ctx.title_and_author);
     }
     ctx.load_title_nvc(get_next_valid(conn, "titles", "book_title", mask)?);
     return Ok(ctx);
