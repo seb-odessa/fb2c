@@ -105,7 +105,7 @@ async fn titles<'a>(ctx: WebCtx<'a>, args: web::Path<String>) -> WebResult {
             eprintln!("{}", e);
             HttpResponse::InternalServerError().finish()})?;
 
-    let body = ctx.handlebars.render("authors", &json!(&page))
+    let body = ctx.handlebars.render("titles", &json!(&page))
                              .expect("couldn't render template");
 
     Ok(HttpResponse::Ok().body(body))

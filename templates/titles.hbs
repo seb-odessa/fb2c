@@ -3,6 +3,7 @@
 <head>
     <title>Поиск по названию</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <style>
         table, th, td { border: 0px solid black; border-collapse: collapse; }
         th, td { padding: 5px; }
@@ -10,10 +11,10 @@
 </head>
 <body>
 
-    <h3>Шаблон поиска: {{book_title}}*</h3>
+    <h3>Поиск по наименованию : {{book_title}}...</h3>
 
     <table>
-    <tr><th></th><th></th><th></th><th>Возможные варианты</th></tr>
+    <tr><th>Возможные варианты</th><th></th><th></th><th></th></tr>
         <tr>
             <td align="right">Наименование</td>
             <td><a href="/titles/-/">[Сброс]</a></td>
@@ -23,7 +24,7 @@
     </table>
 
     <ul>
-        {{#each authors}}
+        {{#each titles}}
             <li>{{{this}}}</li>
         {{/each}}
     </ul>

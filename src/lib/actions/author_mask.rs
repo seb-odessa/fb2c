@@ -1,6 +1,12 @@
 use diesel::sql_types::Text;
 use serde::Serialize;
 
+pub trait NvcMethods {
+    fn get_length_by_name(&self, name: &str) -> usize;
+    fn get_where_like_clause(&self) -> String;
+    fn get_where_explicit_clause(&self) -> String;
+}
+
 #[derive(QueryableByName, Debug, Clone, Serialize)]
 pub struct AuthorMask {
     #[sql_type = "Text"] pub first_name: String,
@@ -21,15 +27,6 @@ impl AuthorMask {
             String::from("-")
         } else {
             val
-        }
-    }
-
-    pub fn get_length_by_name(&self, name: &str) -> usize {
-        match name {
-            "first_name" => self.first_name.chars().count(),
-            "middle_name" => self.middle_name.chars().count(),
-            "last_name" => self.last_name.chars().count(),
-            _ => 0
         }
     }
 
@@ -74,8 +71,18 @@ impl AuthorMask {
     pub fn get_full_name(&self) -> String {
         format!("{} {} {}", self.last_name, self.first_name, self.middle_name)
     }
+}
 
-    pub fn get_where_like_clause(&self) -> String {
+impl NvcMethods for AuthorMask {
+    fn get_length_by_name(&self, name: &str) -> usize {
+        match name {
+            "first_name" => self.first_name.chars().count(),
+            "middle_name" => self.middle_name.chars().count(),
+            "last_name" => self.last_name.chars().count(),
+            _ => 0
+        }
+    }
+    fn get_where_like_clause(&self) -> String {
         let mut clauses = Vec::new();
         if !self.first_name.is_empty()
         {
@@ -101,7 +108,7 @@ impl AuthorMask {
         }
     }
 
-    pub fn get_where_explicit_clause(&self) -> String {
+    fn get_where_explicit_clause(&self) -> String {
         let mut clauses = Vec::new();
         if !self.first_name.is_empty()
         {

@@ -6,7 +6,7 @@ use num_format::{Locale, ToFormattedString};
 
 use serde::Serialize;
 use super::QueryResult;
-use super::AuthorMask;
+use super::NvcMethods;
 use super::SqliteConnection;
 
 
@@ -22,7 +22,7 @@ pub struct BookRecord {
     #[sql_type = "Text"] pub arch_home: String,
 }
 impl BookRecord {
-    pub fn load_by_author_and_title(conn: &SqliteConnection, author: &AuthorMask, title: &String) -> QueryResult<Vec<Self>>{
+    pub fn load_by_author_and_title(conn: &SqliteConnection, author: &dyn NvcMethods, title: &String) -> QueryResult<Vec<Self>>{
         let query = format!(
             r#"
             SELECT book_title, book_file, book_size, book_crc32, arch_name, arch_home
