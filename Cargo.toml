@@ -1,6 +1,6 @@
 [package]
 name = "fb2c"
-version = "1.0.0"
+version = "2.0.0"
 authors = ["seb-odessa <seb@ukr.net>"]
 edition = "2018"
 build = "build.rs"

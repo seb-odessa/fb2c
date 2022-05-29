@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:opds="http://opds-spec.org/2010/catalog"> <id>tag:author:72206</id>
+ <title>Книги автора Калбанов Константин Георгиевич</title>
+ <updated>2022-05-29T10:04:06+02:00</updated>
+ <icon>/favicon.ico</icon>
+ <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
+ <link href="/opds/search?searchTerm={searchTerms}" rel="search" type="application/atom+xml" />
+ <link href="/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
+ <entry> <updated>2022-05-29T10:04:06+02:00</updated>
+ <id>tag:author:bio:72206</id>
+ <title>Об авторе</title>
+ <content type="text/html">&lt;p&gt;По просьбам читателей немного о себе. Родился 1 мая 1971 года, на Северном Кавказе. Окончил Хабаровское высшее военное строительное училище, служил в пограничных войсках, был командиром роты, уволился по сокращению, служил в милиции в должности участкового. В настоящий момент на пенсии. Пишу давно, еще со времен учебы в училище. Началось с того, что я просто засыпал на лекциях, за что огребал наряды, пытался читать, но натура увлекающаяся, когда смотрю телевизор или читаю, то ни черта вокруг не замечаю, как результат опять наказания. Однажды от отчаяния начал писать, благо тогда вообще можно было найти книги только на героика-патриотическую тему, от чего уже оскомина была, вот и стал придумывать фантастические рассказы. Увлекло, однокурсникам понравилось, так и писал четыре года, писал, сжигал, опять писал. Несколько тетрадок до сих пор лежат. После училища времени стало много меньше, но все одно изыскивал.&lt;br /&gt;
+Очень Талантливый Пенсионер&lt;br /&gt;
+Творческий псевдоним Константин Калбазов&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://author.today/u/mahoni928/works&quot;&gt;https://author.today/u/mahoni928/works&lt;/a&gt;&lt;/p&gt;
+</content>
+ <link href="/a/72206" rel="alternate" type="text/html" title="Страница автора на сайте" />
+ <link href="/a/72206" rel="http://opds-spec.org/acquisition" type="text/html" title="Страница автора на сайте" />
+ <link href="/opds/authorsequences/72206" rel="http://www.feedbooks.com/opds/facet" type="application/atom+xml;profile=opds-catalog" title="Книги автора по сериям" />
+ <link href="/opds/authorsequenceless/72206" rel="http://www.feedbooks.com/opds/facet" type="application/atom+xml;profile=opds-catalog" title="Книги автора вне серий" />
+</entry>
+ <entry> <updated>2022-05-29T10:04:06+02:00</updated>
+ <id>tag:author:72206:sequences</id>
+ <title>Книги по сериям</title>
+ <link href="/opds/authorsequences/72206" type="application/atom+xml;profile=opds-catalog" />
+</entry>
+ <entry> <updated>2022-05-29T10:04:06+02:00</updated>
+ <id>tag:author:72206:sequenceless</id>
+ <title>Книги вне серий</title>
+ <link href="/opds/author/72206/authorsequenceless" type="application/atom+xml;profile=opds-catalog" />
+</entry>
+ <entry> <updated>2022-05-29T10:04:06+02:00</updated>
+ <id>tag:author:72206:alphabet</id>
+ <title>Книги по алфавиту</title>
+ <link href="/opds/author/72206/alphabet" type="application/atom+xml;profile=opds-catalog" />
+</entry>
+ <entry> <updated>2022-05-29T10:04:06+02:00</updated>
+ <id>tag:author:72206:time</id>
+ <title>Книги по дате поступления</title>
+ <link href="/opds/author/72206/time" type="application/atom+xml;profile=opds-catalog" />
+</entry>
+</feed>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:opds="http://opds-spec.org/2010/catalog"> <id>tag:root:authors:Калба</id>
+ <title>Книги по авторам</title>
+ <updated>2022-05-29T10:04:31+02:00</updated>
+ <icon>/favicon.ico</icon>
+ <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
+ <link href="/opds/search?searchTerm={searchTerms}" rel="search" type="application/atom+xml" />
+ <link href="/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
+ <entry> <updated>2022-05-29T10:04:31+02:00</updated>
+ <id>tag:author:72206</id>
+ <title>Калбанов Константин Георгиевич</title>
+ <content type="text">67 книг</content>
+ <link href="/opds/author/72206" type="application/atom+xml;profile=opds-catalog" />
+ <link href="/opds/authorsequences/72206" rel="http://www.feedbooks.com/opds/facet" type="application/atom+xml;profile=opds-catalog" title="Книги автора по сериям" />
+ <link href="/opds/authorsequenceless/72206" rel="http://www.feedbooks.com/opds/facet" type="application/atom+xml;profile=opds-catalog" title="Книги автора вне серий" />
+</entry>
+</feed>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0"
+    xmlns:l="http://www.w3.org/1999/xlink">
+    <description>
+        <title-info>
+            <genre>sf_heroic</genre>
+            <genre>fantasy_fight</genre>
+            <author>
+                <first-name>Константин</first-name>
+                <middle-name>Георгиевич</middle-name>
+                <last-name>Калбазов</last-name>
+                <id>e5dde0ca-90fa-11e1-aac2-5924aae99221</id>
+            </author>
+            <book-title>Рейдер. Беглец</book-title>
+            <annotation>
+                <p>Он уже не ждал от жизни ничего хорошего. Калека, до конца своих дней прикованный к инвалидному креслу. Но неожиданная встреча все изменила в один миг. Он вновь обрел потерянное здоровье. Мало того, годы, проведенные на Океании, выковали из него другого человека. Еще недавно неуверенный в себе и трусоватый, сегодня он рвется в космос, в его крови бушует адреналин, а душа жаждет схватки. Ему суждено стать пилотом-истребителем, гладиатором на космической арене и рудокопом на задворках фронтира. Повстречать на своем пути предательство, преданность и дружбу. Перейти дорогу сильным мира сего… и оказаться в бегах. Вот только все время бегать непродуктивно. Ведь давно известно, что лучший способ защиты – это нападение.</p>
+            </annotation>
+            <keywords>близкое будущее,становление героя,виртуальная реальность,LitRPG / ЛитРПГ</keywords>
+            <date value="2020-01-01">2020</date>
+            <coverpage>
+                <image l:href="#cover.jpg"/>
+            </coverpage>
+            <lang>ru</lang>
+            <sequence name="Рейдер" number="1"/>
+        </title-info>
+        <document-info>
+            <author>
+                <nickname>On84ly</nickname>
+            </author>
+            <program-used>FictionBook Editor Release 2.6.7</program-used>
+            <date value="2020-05-06">2020-05-06</date>
+            <src-url>http://www.litres.ru/pages/biblio_book/?art=54128931</src-url>
+            <src-ocr>Текст предоставлен правообладателем</src-ocr>
+            <id>4de7cd92-8f4b-11ea-b989-0cc47a5453d6</id>
+            <version>1.0</version>
+            <history>
+                <p>v 1.0 – создание fb2 – (On84ly)</p>
+            </history>
+            <publisher>
+                <first-name>Литагент</first-name>
+                <last-name>Альфа-книга</last-name>
+                <id>c8ed49d1-8e0b-102d-9ca8-0899e9c51d44</id>
+            </publisher>
+        </document-info>
+        <publish-info>
+            <book-name>Рейдер. Беглец: Фантастический роман</book-name>
+            <publisher>Альфа-книга</publisher>
+            <city>Москва</city>
+            <year>2020</year>
+            <isbn>978-5-9922-3060-4</isbn>
+            <sequence number="1209" name="Фантастический боевик"/>
+        </publish-info>
+    </description>
+    <body>
+        <title>
+            <p>Константин Калбазов</p>
+            <p>Рейдер. Беглец</p>
+        </title>
+        <section>
+            <p>– Даже не сомневайся. Вот сейчас закончим здесь – и все будет.</p>
+        </section>
+    </body>
+    <binary content-type="image/jpeg" id="cover.jpg">HUGE BINARY BLOB WAS HERE</binary>
+</FictionBook>

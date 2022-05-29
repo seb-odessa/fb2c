@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:opds="http://opds-spec.org/2010/catalog"> <id>tag:root:authors:Калб</id>
+ <title>Книги по авторам</title>
+ <updated>2022-05-29T10:00:58+02:00</updated>
+ <icon>/favicon.ico</icon>
+ <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
+ <link href="/opds/search?searchTerm={searchTerms}" rel="search" type="application/atom+xml" />
+ <link href="/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
+ <entry> <updated>2022-05-29T10:01:00+02:00</updated>
+ <id>tag:author:211277</id>
+ <title>Калб Д’єго</title>
+ <content type="text">1 книга</content>
+ <link href="/opds/author/211277" type="application/atom+xml;profile=opds-catalog" />
+ <link href="/opds/authorsequences/211277" rel="http://www.feedbooks.com/opds/facet" type="application/atom+xml;profile=opds-catalog" title="Книги автора по сериям" />
+ <link href="/opds/authorsequenceless/211277" rel="http://www.feedbooks.com/opds/facet" type="application/atom+xml;profile=opds-catalog" title="Книги автора вне серий" />
+</entry>
+ <entry> <updated>2022-05-29T10:01:00+02:00</updated>
+ <id>tag:authors:Калба</id>
+ <title>Калба</title>
+ <content type="text">1 автор на &#039;Калба&#039;</content>
+ <link href="/opds/authors/%D0%9A%D0%B0%D0%BB%D0%B1%D0%B0" type="application/atom+xml;profile=opds-catalog" />
+</entry>
+ <entry> <updated>2022-05-29T10:01:00+02:00</updated>
+ <id>tag:authors:Калбр</id>
+ <title>Калбр</title>
+ <content type="text">1 автор на &#039;Калбр&#039;</content>
+ <link href="/opds/authors/%D0%9A%D0%B0%D0%BB%D0%B1%D1%80" type="application/atom+xml;profile=opds-catalog" />
+</entry>
+</feed>

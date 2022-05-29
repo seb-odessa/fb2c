@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"
+  xmlns:dc="http://purl.org/dc/terms/"
+  xmlns:os="http://a9.com/-/spec/opensearch/1.1/"
+  xmlns:opds="http://opds-spec.org/2010/catalog">
+  <id>tag:author:72206:books:alphabet:</id>
+  <title>Книги по алфавиту</title>
+  <updated>2022-05-29T10:09:56+02:00</updated>
+  <icon>/favicon.ico</icon>
+  <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
+  <link href="/opds/search?searchTerm={searchTerms}" rel="search" type="application/atom+xml" />
+  <link href="/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
+  <link href="/opds/author/72206/alphabet/1" rel="next" type="application/atom+xml;profile=opds-catalog" />
+  <entry>
+    <updated>2022-05-29T10:09:56+02:00</updated>
+    <title>Беглец [litres]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <category term="Героическая фантастика" label="Героическая фантастика" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2020</dc:issued>
+    <link href="/opds/sequencebooks/63435" rel="related" type="application/atom+xml" title="Все книги серии &quot;Рейдер (Калбанов)&quot;" />
+    <content type="text/html">
+      &lt;p class=&quot;book&quot;&gt;Он уже не ждал от жизни ничего хорошего.
+      Калека, до конца своих дней прикованный к инвалидному креслу. Но неожиданная встреча все изменила в один миг.
+      Он вновь обрел потерянное здоровье. Мало того, годы, проведенные на Океании, выковали из него другого человека.
+      Еще недавно неуверенный в себе и трусоватый, сегодня он рвется в космос, в его крови бушует адреналин, а душа жаждет схватки.
+      Ему суждено стать пилотом-истребителем, гладиатором на космической арене и рудокопом на задворках фронтира.
+      Повстречать на своем пути предательство, преданность и дружбу. Перейти дорогу сильным мира сего… и оказаться в бегах.
+      Вот только все время бегать непродуктивно. Ведь давно известно, что лучший способ защиты – это нападение.&lt;/p&gt;
+      &lt;br/&gt;Год издания: 2020&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 1221 Kb&lt;br/&gt;
+      Скачиваний: 13463&lt;br/&gt;Серия: Рейдер (Калбанов) #1&lt;br/&gt;
+    </content>
+    <link href="/i/5/582805/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/5/582805/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/5/582805/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/5/582805/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/582805/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/582805/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/582805/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/582805/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/582805/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/582805/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/582805" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:481b61eeca5d91fbc1fe49ba6868e5b6</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Боец [litres]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Фэнтези" label="Фэнтези" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2013</dc:issued>
+    <link href="/opds/sequencebooks/11828" rel="related" type="application/atom+xml" title="Все книги серии &quot;Пес&quot;" />
+    <content type="text/html">&lt;p class=book&gt;Наемник, прославившийся во всех королевствах. Человек, сделавший имя в своей среде. Иные скажут, что он достиг не так уж и многого. Но он поднялся с самого низа, добился всего сам, и ему нравится его жизнь.&lt;/p&gt;
+&lt;p class=book&gt;И вдруг все переворачивается с ног на голову. В его жилах течет древняя кровь королевского рода. Нет, не так. Он является законным наследником трона. Но хочет ли он этого? Потеснить недавно обретенного младшего брата? Стать причиной бед, что непременно обрушатся на королевство? А главное, взвалить на свои плечи ношу, которая ему не нужна? Ну уж нет. Он будет сражаться за Несвиж не по долгу крови, а потому, что не хочет потерять едва обретенную семью. Он не решится взять на себя ответственность за судьбу королевства, но готов поддержать брата. Стать бойцовским псом на страже короны. Старшим братом, оберегающим младшего. Но достаточно ли только побед на поле брани? Возможно, от него потребуется куда большее. Гораздо большее.&lt;/p&gt;
+&lt;br/&gt;Год издания: 2013&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 1153 Kb&lt;br/&gt;Скачиваний: 33689&lt;br/&gt;Серия: Пес #2&lt;br/&gt;</content>
+    <link href="/i/60/328460/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/60/328460/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/60/328460/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/60/328460/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/328460/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/328460/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/328460/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/328460/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/328460/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/328460/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/328460" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:23b15069556af072d65bd1385b52d87f</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Боярин [litres]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <category term="ЛитРПГ" label="ЛитРПГ" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2021</dc:issued>
+    <link href="/opds/sequencebooks/64337" rel="related" type="application/atom+xml" title="Все книги серии &quot;Скиталец [Калбанов]&quot;" />
+    <content type="text/html">&lt;p class=&quot;book&quot;&gt;Позади начало тернистого пути. Наш современник, оказавшийся в мире с игровыми реалиями, неплохо вписался в него и добился больших успехов. Сделано уже много. Но, похоже, предстоит еще больше, если поставить перед собой ясную цель. А тут еще шило в известном месте, не дающее спокойно усидеть на месте. Словом, скучно не будет, это точно.&lt;/p&gt;
+&lt;br/&gt;Год издания: 2021&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 1284 Kb&lt;br/&gt;Скачиваний: 12047&lt;br/&gt;Серия: Скиталец [Калбанов] #4&lt;br/&gt;</content>
+    <link href="/i/68/644668/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/68/644668/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/68/644668/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/68/644668/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/644668/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/644668/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/644668/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/644668/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/644668/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/644668/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/644668" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:7d030d166f5fbce6fc4e09bc2baf9662</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Боярин [litres, с иллюстрациями]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Альтернативная история" label="Альтернативная история" />
+    <category term="Попаданцы" label="Попаданцы" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2017</dc:issued>
+    <link href="/opds/sequencebooks/50027" rel="related" type="application/atom+xml" title="Все книги серии &quot;Фаворит (Калбанов)&quot;" />
+    <content type="text/html">
+    &lt;p class=&quot;book&quot;&gt;Угораздило же нашего современника Ивана Рогозина, мужчину среднего возраста, оказаться в конце альтернативного семнадцатого века! С одной стороны, вроде как обретенная молодость, и сейчас ему не сорок с лишним, а всего двадцать два. И весь его багаж знаний и опыта остался с ним. И перспективы безбедного существования очень даже реальны. Но, с другой стороны, на плечах Ивана Карпова, как теперь зовут попаданца, оказался стрелецкий кафтан, а сам он на пожизненной государевой службе. И мотает его от Урала до Крыма… А как иначе, отныне его удел — огонь и гарь сражений до конца дней. Однако жизнь выкидывает очередное колено. И вот он уже в гуще интриги, цель которой ни много ни мало бескровное присоединение вольной земли Псковской к Русскому государству. Интересно? А Ивану, признаться, уже надоело.&lt;/p&gt;
+   &lt;br/&gt;Год издания: 2017&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 2302 Kb&lt;br/&gt;Скачиваний: 44165&lt;br/&gt;Серия: Фаворит (Калбанов) #3&lt;br/&gt;</content>
+    <link href="/i/66/555066/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/66/555066/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/66/555066/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/66/555066/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/555066/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/555066/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/555066/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/555066/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/555066/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/555066/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/555066" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:a83acd0c6769175791f08ffd7172b9cc</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>В начале пути</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Альтернативная история" label="Альтернативная история" />
+    <category term="Попаданцы" label="Попаданцы" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2014</dc:issued>
+    <link href="/opds/sequencebooks/33376" rel="related" type="application/atom+xml" title="Все книги серии &quot;Бульдог&quot;" />
+    <content type="text/html">
+    &lt;p class=book&gt;Умудренный годами мужчина из двадцать первого века и малоопытный, всеми обманутый юный император Петр Второй. Что может быть между ними общего? Ничего. Если только не эта встреча посреди бескрайней, заснеженной пустоши, где время застыло вечностью. Встреча, спаявшая их в одно целое.&lt;/p&gt;
+    &lt;p class=book&gt;Теперь у них все общее: и жизнь, и судьба, и долг. И трудов им предстоит ой как немало, потому что проблем в Российской империи более чем достаточно. И пусть они только в начале пути, главное – сделать первый шаг, потому что любая долгая дорога начинается именно с него.&lt;/p&gt;
+   &lt;br/&gt;Год издания: 2014&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 1212 Kb&lt;br/&gt;Скачиваний: 82677&lt;br/&gt;Серия: Бульдог #1&lt;br/&gt;</content>
+    <link href="/i/1/387001/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/1/387001/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/1/387001/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/1/387001/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/387001/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/387001/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/387001/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/387001/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/387001/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/387001/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/387001" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:d2ce3d614143661a0c7e70c69bd42034</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>В шаге от дома [litres]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <category term="Попаданцы" label="Попаданцы" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2018</dc:issued>
+    <link href="/opds/sequencebooks/51804" rel="related" type="application/atom+xml" title="Все книги серии &quot;Шаман (Калбанов)&quot;" />
+    <content type="text/html">&lt;p class=&quot;book&quot;&gt;Быть в шаге от цели. Протянуть руку к ключу, ведущему домой, и… ухватить пустоту. Есть трофеи. И по местным реалиям весьма богатые. Но нет самого главного. Путь на родную Землю двадцать первого века остался закрытым.&lt;/p&gt;
+&lt;p class=&quot;book&quot;&gt;Признаться, ему здесь нравится. Практически погибший мир, ставший на путь возрождения. Открытые и слабо заселенные просторы фронтира. Враждебные кочевники и горцы. Адреналин, огнем струящийся по венам. В этих краях с человека слетает шелуха цивилизованности, обнажая его сущность. Все это близко Бородину. Но ему претит, когда кто-то распоряжается его судьбой и принимает решения за него. А еще он не любит проигрывать. Первый раунд остался за кукловодами. Что же, добро пожаловать во второй. Шаман готов идти до конца. Нашел одну базу кукловодов, найдет и другую. Так что неприятности у этих ребят не закончились. Они только начинаются.&lt;/p&gt;
+&lt;br/&gt;Год издания: 2018&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 1167 Kb&lt;br/&gt;Скачиваний: 16805&lt;br/&gt;Серия: Шаман (Калбанов) #3&lt;br/&gt;</content>
+    <link href="/i/13/531513/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/13/531513/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/13/531513/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/13/531513/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/531513/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/531513/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/531513/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/531513/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/531513/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/531513/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/531513" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:b82ead6373e22492d19bdf1b205e9f16</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>В шаге от дома [litres, с иллюстрациями]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <category term="Попаданцы" label="Попаданцы" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2018</dc:issued>
+    <link href="/opds/sequencebooks/51804" rel="related" type="application/atom+xml" title="Все книги серии &quot;Шаман (Калбанов)&quot;" />
+    <content type="text/html">
+    &lt;p class=&quot;book&quot;&gt;Быть в шаге от цели. Протянуть руку к ключу, ведущему домой, и… ухватить пустоту. Есть трофеи. И по местным реалиям весьма богатые. Но нет самого главного. Путь на родную Землю двадцать первого века остался закрытым.&lt;/p&gt;
+    &lt;p class=&quot;book&quot;&gt;Признаться, ему здесь нравится. Практически погибший мир, ставший на путь возрождения. Открытые и слабо заселенные просторы фронтира. Враждебные кочевники и горцы. Адреналин, огнем струящийся по венам. В этих краях с человека слетает шелуха цивилизованности, обнажая его сущность. Все это близко Бородину. Но ему претит, когда кто-то распоряжается его судьбой и принимает решения за него. А еще он не любит проигрывать. Первый раунд остался за кукловодами. Что же, добро пожаловать во второй. Шаман готов идти до конца. Нашел одну базу кукловодов, найдет и другую. Так что неприятности у этих ребят не закончились. Они только начинаются.&lt;/p&gt;
+   &lt;br/&gt;Год издания: 2018&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 1954 Kb&lt;br/&gt;Скачиваний: 16597&lt;br/&gt;Серия: Шаман (Калбанов) #3&lt;br/&gt;</content>
+    <link href="/i/3/567903/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/3/567903/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/3/567903/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/3/567903/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/567903/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/567903/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/567903/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/567903/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/567903/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/567903/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/567903" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:9d8fd793bef127740c1501b727b0b1be</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Вепрь [компиляция]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2017</dc:issued>
+    <link href="/opds/sequencebooks/25399" rel="related" type="application/atom+xml" title="Все книги серии &quot;Вепрь&quot;" />
+    <content type="text/html">
+        &lt;p class=&quot;book&quot;&gt;Виктор Волков, обычный в общем-то парень, живущий по простому принципу «если тебя ударили по левой щеке, то обернись и выбей обидчику зубы». Таких много вокруг нас, вот только не всем им везёт или не везёт, это уж как кому, выпасть из привычной реальности и попасть в позднее Средневековье. И ладно бы на родной Земле, так нет же, занесло вообще неизвестно куда, да ещё и в чужое тело. Теперь он скоморох. Но по нраву ли ему кочевая жизнь? Пожалуй что и нет, хочется дома и уюта. Зря он так. Ох зря…&lt;/p&gt;
+        &lt;p class=&quot;book&quot;&gt;Трилогия «Вепрь» в одном томе.&lt;/p&gt;
+      &lt;br/&gt;Год издания: 2017&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 3080 Kb&lt;br/&gt;Скачиваний: 14604&lt;br/&gt;Серия: Вепрь&lt;br/&gt;</content>
+    <link href="/i/87/492487/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/87/492487/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/87/492487/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/87/492487/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/492487/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/492487/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/492487/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/492487/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/492487/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/492487/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/492487" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:5fa8e001204272d1fe6003524a81d876</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Воевода [litres, с иллюстрациями]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <category term="Попаданцы" label="Попаданцы" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2021</dc:issued>
+    <link href="/opds/sequencebooks/67626" rel="related" type="application/atom+xml" title="Все книги серии &quot;Пилигрим (Калбанов)&quot;" />
+    <content type="text/html">
+    &lt;p class=&quot;book&quot;&gt;Ему оставалось жить несколько месяцев. Но счастливый случай позволил обрести новую, насыщенную жизнь. Да, в Средневековье, но какое это имеет значение. Тем более если все складывается так, что скучать не приходится.&lt;/p&gt;
+    &lt;p class=&quot;book&quot;&gt;Он испытал на себе, каково это — пройтись по пути «из варяг в греки». Увидел блеск и нищету Царьграда. Прошел через грязь, кровь и смрад сражений. Едва не разрушил государство сельджуков. Был любимцем будущего императора и любовником его сестры. И судьба готова одаривать его новыми радостями и испытаниями, которые не дадут застояться крови. Но в какой-то момент чувство ответственности за доверившихся ему людей подсказывает, что на территории Византийской империи он их защитить не сможет. И тогда он решает вернуться на Русь. Там тоже неспокойно. Княжества то и дело сотрясают междоусобицы. Но ведь можно устроиться и в стороне от этих конфликтов. Если получится, конечно.&lt;/p&gt;
+   &lt;br/&gt;Год издания: 2021&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 1802 Kb&lt;br/&gt;Скачиваний: 17508&lt;br/&gt;Серия: Пилигрим (Калбанов) #2&lt;br/&gt;</content>
+    <link href="/i/38/649938/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/38/649938/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/38/649938/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/38/649938/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/649938/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/649938/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/649938/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/649938/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/649938/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/649938/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/649938" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:94a2919b04218094ded46eacb5fc1d88</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Гений [СИ litres]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <category term="ЛитРПГ" label="ЛитРПГ" />
+    <category term="Попаданцы" label="Попаданцы" />
+    <category term="Самиздат, сетевая литература" label="Самиздат, сетевая литература" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2020</dc:issued>
+    <link href="/opds/sequencebooks/64337" rel="related" type="application/atom+xml" title="Все книги серии &quot;Скиталец [Калбанов]&quot;" />
+    <content type="text/html">&lt;p class=&quot;book&quot;&gt;Что это? Бред? Кома? Или он и впрямь оказался в мире, живущем по правилам игровых реалий? Прокачка себя любимого, умения, навыки, дерево развития, уровни, артефакты. Вроде бы и Россия, но отчего-то раскинувшаяся на территории многочисленных архипелагов. Царь, князья, бояре, дружины, пароходы, пираты… Поверить в окружающую реальность трудно. Однако, бред это или нет, лучше все же принять существующие реалии и вписаться в этот мир. Пропасть-то всегда успеется.&lt;/p&gt;
+&lt;br/&gt;Год издания: 2020&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 1544 Kb&lt;br/&gt;Скачиваний: 28454&lt;br/&gt;Серия: Скиталец [Калбанов] #1&lt;br/&gt;</content>
+    <link href="/i/49/588149/robo_generated_litres_cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/49/588149/robo_generated_litres_cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/49/588149/robo_generated_litres_cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/49/588149/robo_generated_litres_cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/588149/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/588149/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/588149/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/588149/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/588149/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/588149/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/588149" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:b33e9e5ed7744c2cccd49ba1f0f48704</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Город в степи [litres]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <category term="Попаданцы" label="Попаданцы" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2014</dc:issued>
+    <link href="/opds/sequencebooks/30782" rel="related" type="application/atom+xml" title="Все книги серии &quot;Фронтир&quot;" />
+    <content type="text/html">
+        &lt;p class=&quot;book&quot;&gt;Шесть лет. Шесть долгих и вместе с тем стремительно пролетевших лет наши современники Варакин и Болотин находятся в параллельном мире без всякой надежды вернуться домой. Прожить скромную и серую жизнь у них никак не получилось. Ничего не поделаешь: люди не от мира сего в прямом смысле этого слова, они просто не могли не выделиться. Ну а раз уж так сложилось, то стоит подумать, как поступить – плыть по течению или браться за рулевое весло…&lt;/p&gt;
+        &lt;p class=&quot;book&quot;&gt;Этот город возник благодаря их стараниям, воле и устремленности. Благодаря вере в них тех, кто пожелал изменить свою жизнь к лучшему. Их совместными усилиями в бескрайней дикой степи возник цветущий сад. Два друга готовы защищать свое детище до последней возможности. Они готовы даже преступить писаные и неписаные законы. Но что делать, когда наступает момент решающего выбора? Покориться невзгодам и смотреть, как рушится их дом? Или взять в руки оружие и отстоять свое право на лучшую долю?&lt;/p&gt;
+      &lt;br/&gt;Год издания: 2014&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 1204 Kb&lt;br/&gt;Скачиваний: 46332&lt;br/&gt;Серия: Фронтир #4&lt;br/&gt;</content>
+    <link href="/i/59/506659/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/59/506659/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/59/506659/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/59/506659/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/506659/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/506659/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/506659/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/506659/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/506659/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/506659/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/506659" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:5bec29284e635639c1a903366e3adbca</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Гремя огнем… [litres, с иллюстрациями]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2018</dc:issued>
+    <link href="/opds/sequencebooks/54874" rel="related" type="application/atom+xml" title="Все книги серии &quot;Бронеходчики&quot;" />
+    <content type="text/html">
+    &lt;p class=&quot;book&quot;&gt;Великая война с миллионными жертвами позади. Окончательный передел территорий и сфер влияния завершен. Могучие генераторы Теслы стоят на страже мира. В старушке-Европе наконец установилась спокойная и размеренная жизнь. Но так ли это на самом деле? Все ли довольны принятыми решениями? Или, может, кто-то все же считает себя обиженным и жаждет реванша?&lt;/p&gt;
+    &lt;p class=&quot;book&quot;&gt;А где-то в недрах мира закипает адский котел противоречий… И вновь расплатой за ошибки политиков и в угоду их амбициям льется солдатская кровь. Вновь на полях сражений слышатся яростные крики, стенания раненых, винтовочная трескотня, грохот пулеметов, гром пушек, лязг гусениц и грозная поступь бронеходов.&lt;/p&gt;
+   &lt;br/&gt;Год издания: 2018&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 2050 Kb&lt;br/&gt;Скачиваний: 11421&lt;br/&gt;Серия: Бронеходчики #2&lt;br/&gt;</content>
+    <link href="/i/9/554809/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/9/554809/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/9/554809/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/9/554809/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/554809/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/554809/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/554809/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/554809/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/554809/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/554809/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/554809" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:05d8b9c13f2ff855a9c043023a0f3145</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Гренада моя [litres, с иллюстрациями]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2018</dc:issued>
+    <link href="/opds/sequencebooks/54874" rel="related" type="application/atom+xml" title="Все книги серии &quot;Бронеходчики&quot;" />
+    <content type="text/html">
+    &lt;p class=&quot;book&quot;&gt;Гений Теслы отбросил человечество в эпоху пара. Но он же стал неодолимой преградой на пути очередной общемировой мясорубки. Прогресс немного сместился и пошел по иному пути. Но великий сын сербского народа оказался не прав. В локальных войнах крови льется ничуть не меньше, а может, и больше. Под грохот и блеск стали на поля сражений выступают шагающие боевые машины. Грозные бронеходы, ведомые в бой отважными пилотами, рыцарями без страха и упрека бурного и стремительного двадцатого века.&lt;/p&gt;
+   &lt;br/&gt;Год издания: 2018&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 2247 Kb&lt;br/&gt;Скачиваний: 12957&lt;br/&gt;Серия: Бронеходчики #1&lt;br/&gt;</content>
+    <link href="/i/8/554808/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/8/554808/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/8/554808/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/8/554808/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/554808/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/554808/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/554808/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/554808/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/554808/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/554808/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/554808" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:c3555222fe0bbd3deeb00b9fd6f6ac18</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Гренада моя [авторский текст]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <category term="Самиздат, сетевая литература" label="Самиздат, сетевая литература" />
+    <category term="Стимпанк" label="Стимпанк" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2018</dc:issued>
+    <link href="/opds/sequencebooks/54874" rel="related" type="application/atom+xml" title="Все книги серии &quot;Бронеходчики&quot;" />
+    <content type="text/html">
+    &lt;p class=&quot;book&quot;&gt;Гений Теслы отбросил человечество в эпоху пара. Но он же стал неодолимой преградой на пути очередной общемировой мясорубки. Прогресс немного сместился и пошел по иному пути. Но великий сын сербского народа оказался не прав. В локальных войнах крови льется ничуть не меньше, а может, и больше. Под грохот и блеск стали на поля сражений выступают шагающие боевые машины. Грозные бронеходы, ведомые в бой отважными пилотами, рыцарями без страха и упрека бурного и стремительного двадцатого века.&lt;/p&gt;
+   &lt;br/&gt;Год издания: 2018&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 1810 Kb&lt;br/&gt;Скачиваний: 9515&lt;br/&gt;Серия: Бронеходчики #1&lt;br/&gt;</content>
+    <link href="/i/23/530323/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/23/530323/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/23/530323/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/23/530323/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/530323/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/530323/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/530323/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/530323/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/530323/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/530323/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/530323" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:8e97cbe9d80dea61e36de9190f85d304</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Дворянин [litres]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="ЛитРПГ" label="ЛитРПГ" />
+    <category term="Попаданцы" label="Попаданцы" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2021</dc:issued>
+    <link href="/opds/sequencebooks/64337" rel="related" type="application/atom+xml" title="Все книги серии &quot;Скиталец [Калбанов]&quot;" />
+    <content type="text/html">&lt;p class=&quot;book&quot;&gt;Куда это он попал? По виду конец девятнадцатого века: в ходу паровые машины, а общество разделено на сословия. Да и живет этот мир по игровым реалиям. Уровни развития, опыт, навыки, умения, артефакты. А тут еще вдруг появившаяся одаренность, превратившая его в желанную добычу для власть имущих. Чтобы получить хотя бы относительную свободу, есть всего два выхода: скитания или дорога вверх. И он решает взять судьбу в свои руки, обзавестись командой и добиться дворянского звания. Только за это придется драться на пределах возможностей, не раз заглянуть за край, найти друзей и завести врагов.&lt;/p&gt;
+&lt;br/&gt;Год издания: 2021&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 1226 Kb&lt;br/&gt;Скачиваний: 17867&lt;br/&gt;Серия: Скиталец [Калбанов] #3&lt;br/&gt;</content>
+    <link href="/i/68/635168/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/68/635168/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/68/635168/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/68/635168/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/635168/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/635168/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/635168/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/635168/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/635168/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/635168/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/635168" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:bf1f74e4354d07bad08ac478174a8807</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Дорога на двоих [litres]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <category term="Попаданцы" label="Попаданцы" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2013</dc:issued>
+    <link href="/opds/sequencebooks/30782" rel="related" type="application/atom+xml" title="Все книги серии &quot;Фронтир&quot;" />
+    <content type="text/html">&lt;p class=book&gt;Отправиться в дикую степь, живущую по своим законам. Вступить в схватку с озлобленными аборигенами, жаждущими твоей крови. Переступить через себя ради того, чтобы разыскать друга, которого уже давно считаешь мертвым. Заслонить собой боевых соратников и чудом избежать смерти. Согласитесь, сложный путь, но неужели бывает сложнее? Как оказалось, бывает. Разумеется, если ты собираешься использовать предоставленный шанс, а не прожить простую и серую жизнь в сытости и довольстве. И ведь есть такая возможность. Но отчего-то, стиснув зубы, ты выбираешь другой путь – тернистый и опасный.&lt;/p&gt;
+&lt;br/&gt;Год издания: 2013&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 1105 Kb&lt;br/&gt;Скачиваний: 48862&lt;br/&gt;Серия: Фронтир #3&lt;br/&gt;</content>
+    <link href="/i/83/354883/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/83/354883/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/83/354883/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/83/354883/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/354883/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/354883/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/354883/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/354883/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/354883/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/354883/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/354883" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:e1c7f8af0d41e0a14a548f4d9545e34d</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Еретик [litres]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Альтернативная история" label="Альтернативная история" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2012</dc:issued>
+    <link href="/opds/sequencebooks/2088" rel="related" type="application/atom+xml" title="Все книги серии &quot;Рыцарь(Калбанов)&quot;" />
+    <content type="text/html">
+    &lt;p class=book&gt;Человеческие государства под ударом. Враг стремительно продвигается к сердцу людских королевств. Прославленная рыцарская конница пала, цвет воинства превратился в прах. В сердцах людей поселился страх и отчаяние. Нет, они не сложили оружия и будут сражаться до последней возможности, но есть ли сила, способная остановить захватчиков и поворотить их вспять?&lt;/p&gt;
+    &lt;p class=book&gt;Он не мессия, он не собирается сражаться один с врагами людей, он не хочет сражаться за них. Он может уйти, но не может бросить тех немногих, кто стал ему дорог. Он – это наш современник Андрей Новак, волей судьбы заброшенный в этот странный мир, который успел полюбить. Чтобы спасти своих близких, он готов предавать, готов идти по трупам, обагрив по локоть свои руки кровью, как людской, так и орочьей… Он готов на многое, так как не видит иного выхода.&lt;/p&gt;
+   &lt;br/&gt;Год издания: 2012&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 1184 Kb&lt;br/&gt;Скачиваний: 74916&lt;br/&gt;Серия: Рыцарь(Калбанов) #4&lt;br/&gt;</content>
+    <link href="/i/98/284998/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/98/284998/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/98/284998/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/98/284998/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/284998/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/284998/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/284998/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/284998/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/284998/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/284998/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/284998" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:1b0278d786eaa693e5aacc6cb9858f4c</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Защитник [litres, с иллюстрациями]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <category term="Героическая фантастика" label="Героическая фантастика" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2020</dc:issued>
+    <link href="/opds/sequencebooks/63435" rel="related" type="application/atom+xml" title="Все книги серии &quot;Рейдер (Калбанов)&quot;" />
+    <content type="text/html">
+    &lt;p class=&quot;book&quot;&gt;Лучший способ защиты — это нападение. Если из тебя сделали дичь, меняй правила и превратись в охотника. Загони свой страх на задворки и заставь бояться самих охотников. Конечно, так просто этого не добиться. Но кто не рискует, тот не пьет шампанское! А тут еще и межгалактическая война, в которую затягивает все больше и больше участников. Вроде и не желал влезать в это, но сложилось так, что война дотянулась и до него.&lt;/p&gt;
+    &lt;p class=&quot;book&quot;&gt;Безбрежный космос, тайны, авантюры, схватки, абордажи, отчаянная отвага, преданность дружбе, любовь и верность долгу. Все это сплетается для Леднева в один клубок. Что поделать, такая у него теперь насыщенная жизнь.&lt;/p&gt;
+   &lt;br/&gt;Год издания: 2020&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 2103 Kb&lt;br/&gt;Скачиваний: 7295&lt;br/&gt;Серия: Рейдер (Калбанов) #2&lt;br/&gt;</content>
+    <link href="/i/47/650147/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/47/650147/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/47/650147/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/47/650147/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/650147/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/650147/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/650147/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/650147/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/650147/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/650147/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/650147" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:3b71554a8415c314a9311e0107a99d37</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>И пришел с грозой военной… [litres]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Альтернативная история" label="Альтернативная история" />
+    <category term="Попаданцы" label="Попаданцы" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2012</dc:issued>
+    <link href="/opds/sequencebooks/24243" rel="related" type="application/atom+xml" title="Все книги серии &quot;Росич&quot;" />
+    <content type="text/html">
+    &lt;p class=book&gt;Пять лет… Пять долгих и вместе с тем стремительных лет трое друзей, неожиданно для себя оказавшиеся в России накануне Русско-японской войны, готовились к неизбежной войне. За это время они не раз преступали закон, не гнушаясь тяжкими преступлениями, они поставили в заклад свои жизни ради одной только цели – переломить ход истории, заставить ее изменить намеченный курс. Но достанет ли у них сил? Насколько они хорошо подготовились? Захочет ли старуха-история уступить или прокатится катком по тем, кто решил ей перечить? Все, что могли, они уже сделали, а дальше, как говорится, война план покажет.&lt;/p&gt;
+   &lt;br/&gt;Год издания: 2012&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 1257 Kb&lt;br/&gt;Скачиваний: 55503&lt;br/&gt;Серия: Росич #2&lt;br/&gt;</content>
+    <link href="/i/9/277909/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/9/277909/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/9/277909/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/9/277909/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/277909/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/277909/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/277909/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/277909/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/277909/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/277909/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/277909" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:63df94a6600b3267b985c161fec0a448</id>
+  </entry>
+  <entry>
+    <updated>2022-05-29T10:09:57+02:00</updated>
+    <title>Карантин [litres, с иллюстрациями]</title>
+    <author>
+      <name>Калбанов Константин Георгиевич</name>
+      <uri>/a/72206</uri>
+    </author>
+    <link href="/opds/author/72206" rel="related" type="application/atom+xml" title="Все книги автора Калбанов Константин Георгиевич" />
+    <category term="Боевая фантастика" label="Боевая фантастика" />
+    <dc:language>ru</dc:language>
+    <dc:format>fb2+zip</dc:format>
+    <dc:issued>2019</dc:issued>
+    <link href="/opds/sequencebooks/58868" rel="related" type="application/atom+xml" title="Все книги серии &quot;Пандора (Калбанов)&quot;" />
+    <content type="text/html">
+    &lt;p class=&quot;book&quot;&gt;Сколько написано книг, снято фильмов и разработано игр о зомби-апокалипсисе? Посчитать, конечно, получится, но много. Очень много. Казалось бы, все прекрасно знают, как нужно действовать в подобной ситуации, и у вируса попросту нет шансов. Вот только ерунда все это. И Дмитрий сумел в этом убедиться лично. Как, впрочем, и те, кто затеял этот страшный эксперимент.&lt;/p&gt;
+   &lt;br/&gt;Год издания: 2019&lt;br/&gt;Формат: fb2&lt;br/&gt;Язык: ru&lt;br/&gt;Размер: 2105 Kb&lt;br/&gt;Скачиваний: 15448&lt;br/&gt;Серия: Пандора (Калбанов) #1&lt;br/&gt;</content>
+    <link href="/i/69/565369/cover.jpg" rel="http://opds-spec.org/image" type="image/jpeg" />
+    <link href="/i/69/565369/cover.jpg" rel="x-stanza-cover-image" type="image/jpeg" />
+    <link href="/i/69/565369/cover.jpg" rel="http://opds-spec.org/thumbnail" type="image/jpeg" />
+    <link href="/i/69/565369/cover.jpg" rel="x-stanza-cover-image-thumbnail" type="image/jpeg" />
+    <link href="/b/565369/fb2" rel="http://opds-spec.org/acquisition/open-access" type="application/fb2+zip" />
+    <link href="/b/565369/html" rel="http://opds-spec.org/acquisition/open-access" type="application/html+zip" />
+    <link href="/b/565369/txt" rel="http://opds-spec.org/acquisition/open-access" type="application/txt+zip" />
+    <link href="/b/565369/rtf" rel="http://opds-spec.org/acquisition/open-access" type="application/rtf+zip" />
+    <link href="/b/565369/epub" rel="http://opds-spec.org/acquisition/open-access" type="application/epub+zip" />
+    <link href="/b/565369/mobi" rel="http://opds-spec.org/acquisition/open-access" type="application/x-mobipocket-ebook" />
+    <link href="/b/565369" rel="alternate" type="text/html" title="Книга на сайте" />
+    <id>tag:book:ea46704c76e24c7445ce3ca3bc6d86d7</id>
+  </entry>
+</feed>
